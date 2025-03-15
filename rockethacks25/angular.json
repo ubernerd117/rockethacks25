@@ -29,6 +29,12 @@
             "styles": [
               "src/styles.css"
             ],
+            "stylePreprocessorOptions": {
+            "includePaths": [
+            "src"
+            ]
+          },
+
             "scripts": []
           },
           "configurations": {
@@ -87,10 +93,18 @@
             "styles": [
               "src/styles.css"
             ],
+            "stylePreprocessorOptions": {
+            "includePaths": [
+            "src"
+            ]
+          },
             "scripts": []
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }
