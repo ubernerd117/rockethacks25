@@ -2,8 +2,7 @@ import os
 from typing import List, Dict, Any
 from pathlib import Path
 import json
-from dotenv import load_dotenv
-
+from constants import GEMINI_MODEL, GOOGLE_API_KEY
 from langchain_core.documents import Document
 from langchain_community.document_loaders import PyPDFLoader
 from langchain_core.prompts import ChatPromptTemplate
@@ -12,8 +11,6 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 
 from constants import GEMINI_MODEL, GOOGLE_API_KEY
 
-# Load environment variables
-load_dotenv()
 
 class PDFAutograder:
     def __init__(

@@ -5,6 +5,6 @@ langchain-google-genai
 langchain-mistralai
 pypdf
 python-dotenv
-
+werkzeug 
 
 
