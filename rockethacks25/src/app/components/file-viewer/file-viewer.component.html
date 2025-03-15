@@ -1,1 +1,9 @@
-<p>file-viewer works!</p>
+<div>
+  <h3>Submitted Assignments</h3>
+  <ul>
+    <li *ngFor="let file of files">
+      {{ file.name }} (by {{ file.student }})
+      <button (click)="viewFile(file)">View</button>
+    </li>
+  </ul>
+</div>

@@ -9,6 +9,7 @@ import { FormsModule } from '@angular/forms';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
+  standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule],
 })
 export class LoginComponent {
@@ -25,7 +26,7 @@ export class LoginComponent {
         this.router.navigate(['/student']);
       }
     } else {
-      alert('login error');
+      alert('Invalid username or password.');
     }
   }
 }

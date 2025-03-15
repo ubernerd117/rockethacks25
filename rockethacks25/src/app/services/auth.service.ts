@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 interface User {
   username: string;
+  password?: string;
   role: 'student' | 'teacher';
 }
 
@@ -11,14 +12,22 @@ interface User {
 export class AuthService {
   private currentUser: User | null = null;
 
+  private users: User[] = [
+    { username: 'student1', password: 'password123', role: 'student' },
+    { username: 'student2', password: 'password456', role: 'student' },
+    { username: 'teacher1', password: 'teacherpass', role: 'teacher' },
+    { username: 'teacher2', password: 'testpass', role: 'teacher' },
+  ];
+
   constructor() {}
 
   login(username: string, password?: string): boolean {
-    if (username === 'student1' || username === 'student2') {
-      this.currentUser = { username, role: 'student' };
-      return true;
-    } else if (username === 'teacher1') {
-      this.currentUser = { username, role: 'teacher' };
+    const user = this.users.find(
+      (u) => u.username === username && u.password === password
+    );
+
+    if (user) {
+      this.currentUser = user;
       return true;
     } else {
       return false;
