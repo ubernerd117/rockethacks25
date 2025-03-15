@@ -1,10 +1,12 @@
-// file-upload.component.ts
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-file-upload',
   templateUrl: './file-upload.component.html',
   styleUrls: ['./file-upload.component.css'],
+  standalone: true,
+  imports: [CommonModule],
 })
 export class FileUploadComponent {
   selectedFile: File | null = null;

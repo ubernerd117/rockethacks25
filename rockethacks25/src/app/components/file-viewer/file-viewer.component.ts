@@ -1,4 +1,3 @@
-// file-viewer.component.ts
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
@@ -6,6 +5,7 @@ import { Component } from '@angular/core';
   selector: 'app-file-viewer',
   templateUrl: './file-viewer.component.html',
   styleUrls: ['./file-viewer.component.css'],
+  standalone: true,
   imports: [CommonModule],
 })
 export class FileViewerComponent {
