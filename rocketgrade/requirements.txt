@@ -1,0 +1,10 @@
+langgraph
+langchain-core
+langchain-community
+langchain-google-genai
+langchain-mistralai
+pypdf
+python-dotenv
+
+
+
