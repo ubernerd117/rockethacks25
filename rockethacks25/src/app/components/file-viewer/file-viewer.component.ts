@@ -23,6 +23,7 @@ export class FileViewerComponent implements OnInit {
   ngOnInit(): void {
     const currentUser = this.authService.getCurrentUser();
     if (currentUser && currentUser.role === 'teacher') {
+      console.log('getting assignments ');
       const teacherClasses = this.classService.getClassesForTeacher(
         currentUser.username
       );

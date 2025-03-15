@@ -19,13 +19,17 @@ export class FileUploadComponent {
   ) {}
 
   onFileSelected(event: any): void {
+    console.log('file selected', event);
     this.selectedFile = event.target.files[0];
   }
 
   onUpload(): void {
+    // event.preventDefault(); // Prevent the default form submission
     if (this.selectedFile) {
+      console.log('made it to the selected file');
       const currentUser = this.authService.getCurrentUser();
       if (currentUser && currentUser.classId) {
+        console.log('am i making it to on upload');
         this.assignmentService.addAssignment(
           this.selectedFile.name,
           currentUser.username,

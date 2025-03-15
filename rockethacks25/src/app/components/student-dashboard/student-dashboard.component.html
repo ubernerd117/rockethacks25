@@ -1,6 +1,4 @@
-
 <div class="flex min-h-screen bg-base-200">
-  <!-- Sidebar -->
   <div class="w-64 bg-base-100 p-4 shadow-lg">
     <h2 class="text-xl font-bold text-primary mb-4">Student Dashboard</h2>
     <ul class="menu bg-base-100 rounded-box">
@@ -13,17 +11,13 @@
     </ul>
   </div>
 
-  <!-- Main Content -->
   <div class="flex-1 p-6">
-    <!-- Welcome Section -->
     <div class="bg-white p-6 rounded-lg shadow-md">
       <h1 class="text-2xl font-semibold">Welcome, Student!</h1>
       <p class="text-gray-600">Here's an overview of your progress.</p>
     </div>
 
-    <!-- Cards Section -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
-      <!-- Courses Card -->
       <div class="card w-full bg-primary text-primary-content shadow-xl">
         <div class="card-body">
           <h2 class="card-title">Enrolled Courses</h2>
@@ -34,7 +28,6 @@
         </div>
       </div>
 
-      <!-- Grades Card -->
       <div class="card w-full bg-accent text-accent-content shadow-xl">
         <div class="card-body">
           <h2 class="card-title">Latest Grades</h2>
@@ -45,7 +38,6 @@
         </div>
       </div>
 
-      <!-- Notifications Card -->
       <div class="card w-full bg-secondary text-secondary-content shadow-xl">
         <div class="card-body">
           <h2 class="card-title">Notifications</h2>
@@ -57,7 +49,6 @@
       </div>
     </div>
 
-    <!-- Grades Table -->
     <div class="overflow-x-auto mt-6">
       <table class="table w-full">
         <thead>
@@ -88,18 +79,13 @@
     </div>
   </div>
 </div>
-<!-- File Upload Section -->
-<div class="bg-white p-6 rounded-lg shadow-md mt-6">
-  <h2 class="text-xl font-semibold">Submit Assignment</h2>
-  <form>
-    <div class="form-control">
-      <label class="label">
-        <span class="label-text">Choose file</span>
-      </label>
-      <input type="file" class="input input-bordered" />
-    </div>
-    <div class="form-control mt-4">
-      <button type="submit" class="btn btn-primary">Upload</button>
-    </div>
-  </form>
-</div>
+
+<app-file-upload></app-file-upload>
+
+<!-- <div>
+  <h2>Student Dashboard</h2>
+
+  <app-file-upload></app-file-upload>
+
+  <button (click)="logout()">logout</button>
+</div> -->
