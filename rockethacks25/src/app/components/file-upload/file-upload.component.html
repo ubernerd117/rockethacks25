@@ -1,1 +1,6 @@
-<p>file-upload works!</p>
+<!-- file-upload.component.html -->
+<div>
+  <h3>Upload Assignment</h3>
+  <input type="file" (change)="onFileSelected($event)" />
+  <button (click)="onUpload()" [disabled]="!selectedFile">Upload</button>
+</div>

@@ -1,11 +1,17 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-teacher-dashboard',
-  imports: [],
   templateUrl: './teacher-dashboard.component.html',
-  styleUrl: './teacher-dashboard.component.css'
+  styleUrls: ['./teacher-dashboard.component.css'],
 })
 export class TeacherDashboardComponent {
+  constructor(private authService: AuthService, private router: Router) {}
 
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/']);
+  }
 }
