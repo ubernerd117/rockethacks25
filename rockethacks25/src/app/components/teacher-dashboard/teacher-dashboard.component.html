@@ -1,6 +1,65 @@
-<div>
-  <h2>Teacher Dashboard</h2>
-  <app-class-management></app-class-management>
-  <app-file-viewer></app-file-viewer>
-  <button (click)="logout()">logout</button>
+<div class="flex min-h-screen bg-base-200">
+  <!-- Sidebar -->
+  <div class="w-64 bg-base-100 p-4 shadow-lg">
+    <h2 class="text-xl font-bold text-primary mb-4">Teacher Dashboard</h2>
+    <ul class="menu bg-base-100 rounded-box">
+      <li><a class="active">Home</a></li>
+      <li><a>Classes</a></li>
+      <li><a>Assignments</a></li>
+      <li><a>Grades</a></li>
+      <li><a>Profile</a></li>
+      <li><a>Settings</a></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="flex-1 p-6">
+    <!-- Welcome Section -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h1 class="text-2xl font-semibold">Welcome, Professor!</h1>
+      <p class="text-gray-600">Here's an overview of your courses and student progress.</p>
+    </div>
+
+    <!-- Cards Section -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+      <!-- Classes Card -->
+      <div class="card w-full bg-primary text-primary-content shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">Your Classes</h2>
+          <p>You are teaching {{teacherClasses.length}} classes.</p>
+          <div class="card-actions justify-end">
+            <button class="btn" (click)="viewClasses()">View Classes</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Assignments Card -->
+      <div class="card w-full bg-accent text-accent-content shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">Upcoming Deadlines</h2>
+          <p>3 assignments due this week.</p>
+          <div class="card-actions justify-end">
+            <button class="btn">View Assignments</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notifications Card -->
+      <div class="card w-full bg-secondary text-secondary-content shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">Notifications</h2>
+          <p>You have 2 new messages.</p>
+          <div class="card-actions justify-end">
+            <button class="btn">Check Messages</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Class Management Section -->
+    <div class="mt-6">
+      <app-class-management></app-class-management>
+    </div>
+    <button (click)="logout()" class="btn btn-error mt-6">logout</button>
+  </div>
 </div>
