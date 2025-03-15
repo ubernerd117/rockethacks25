@@ -4,9 +4,10 @@ import { LoginComponent } from './components/login/login.component';
 import { StudentDashboardComponent } from './components/student-dashboard/student-dashboard.component';
 import { TeacherDashboardComponent } from './components/teacher-dashboard/teacher-dashboard.component';
 import { AuthGuard } from './components/auth-guard/auth-guard.component';
-
+import { HomePageComponent } from './pages/home-page/home-page.component';
 export const routes: Routes = [
-  { path: '', component: LoginComponent },
+  { path: '', component: HomePageComponent }, // Default to HomeComponent
+  { path: 'login', component: LoginComponent },
   {
     path: 'student',
     component: StudentDashboardComponent,
@@ -21,8 +22,8 @@ export const routes: Routes = [
   },
 ];
 
-// @NgModule({
-//   imports: [RouterModule.forRoot(routes)],
-//   exports: [RouterModule],
-// })
-// export class AppRoutingModule {}
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule],
+})
+export class AppRoutingModule {}
