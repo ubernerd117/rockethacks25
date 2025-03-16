@@ -1,4 +1,4 @@
-<div data-theme="pastel" class="min-h-screen">
+<div data-theme="pastel" class="max-h-screen flex flex-col">
   <div class="navbar bg-base-300 shadow-lg">
     <div class="flex-1">
       <a routerLink="/" class="btn btn-ghost text-xl">RocketGrades</a>
@@ -12,7 +12,10 @@
     </div>
   </div>
 
-  <div class="container mx-auto p-4">
+  <div class="container mx-auto pt-4 flex-grow">
     <router-outlet></router-outlet>
   </div>
+  <footer class="p-4 text-center text-base-content bg-accent">
+    <div>&copy; 2025 RocketGrades</div>
+  </footer>
 </div>
