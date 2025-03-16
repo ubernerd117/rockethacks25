@@ -1,4 +1,4 @@
-<div class="flex min-h-screen bg-base-200">
+<div class="flex min-h-screen bg-base-200 w-screen p-4">
   <!-- Sidebar -->
   <div class="w-64 bg-base-100 p-4 shadow-lg">
     <h2 class="text-xl font-bold text-primary mb-4">Teacher Dashboard</h2>
@@ -14,8 +14,12 @@
   <div class="flex-1 p-6">
     <!-- Welcome Section -->
     <div class="bg-white p-6 rounded-lg shadow-md">
-      <h1 class="text-2xl font-semibold text-gray-800 mb-2">Welcome, Professor!</h1>
-      <p class="text-gray-600">Here's an overview of your courses and student progress.</p>
+      <h1 class="text-2xl font-semibold text-gray-800 mb-2">
+        Welcome, Professor!
+      </h1>
+      <p class="text-gray-600">
+        Here's an overview of your courses and student progress.
+      </p>
     </div>
 
     <!-- Cards Section -->
@@ -24,7 +28,7 @@
       <div class="card w-full bg-primary text-primary-content shadow-xl">
         <div class="card-body">
           <h2 class="card-title">Your Classes</h2>
-          <p>You are teaching {{teacherClasses.length}} classes.</p>
+          <p>You are teaching {{ teacherClasses.length }} classes.</p>
           <div class="card-actions justify-end">
             <button class="btn" (click)="viewClasses()">View Classes</button>
           </div>
@@ -35,9 +39,11 @@
       <div class="card w-full bg-accent text-accent-content shadow-xl">
         <div class="card-body">
           <h2 class="card-title">Upcoming Deadlines</h2>
-          <p>{{teacherAssignments.length}} assignments due this week.</p>
+          <p>{{ teacherAssignments.length }} assignments due this week.</p>
           <div class="card-actions justify-end">
-            <button class="btn" (click)="viewAssignments()">View Assignments</button>
+            <button class="btn" (click)="viewAssignments()">
+              View Assignments
+            </button>
           </div>
         </div>
       </div>
@@ -48,7 +54,9 @@
           <h2 class="card-title">Class Overview</h2>
           <p>Track student progress, attendance, and performance.</p>
           <div class="card-actions justify-end">
-            <button class="btn" (click)="viewStatistics()">View Statistics</button>
+            <button class="btn" (click)="viewStatistics()">
+              View Statistics
+            </button>
           </div>
         </div>
       </div>
