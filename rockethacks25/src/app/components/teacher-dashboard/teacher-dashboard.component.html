@@ -4,11 +4,9 @@
     <h2 class="text-xl font-bold text-primary mb-4">Teacher Dashboard</h2>
     <ul class="menu bg-base-100 rounded-box">
       <li><a class="active">Home</a></li>
-      <li><a>Classes</a></li>
-      <li><a>Assignments</a></li>
+      <li><a routerLink="/classes">Classes</a></li>
+      <li><a routerLink="/assignments">Assignments</a></li>
       <li><a>Grades</a></li>
-      <li><a>Profile</a></li>
-      <li><a>Settings</a></li>
     </ul>
   </div>
 
@@ -26,9 +24,9 @@
       <div class="card w-full bg-primary text-primary-content shadow-xl">
         <div class="card-body">
           <h2 class="card-title">Your Classes</h2>
-          <!-- <p>You are teaching {{teacherClasses.length}} classes.</p> -->
+          <p>You are teaching {{teacherClasses.length}} classes.</p>
           <div class="card-actions justify-end">
-            <!-- <button class="btn" (click)="viewClasses()">View Classes</button> -->
+            <button class="btn" (click)="viewClasses()">View Classes</button>
           </div>
         </div>
       </div>
@@ -37,20 +35,20 @@
       <div class="card w-full bg-accent text-accent-content shadow-xl">
         <div class="card-body">
           <h2 class="card-title">Upcoming Deadlines</h2>
-          <p>3 assignments due this week.</p>
+          <p>{{teacherAssignments.length}} assignments due this week.</p>
           <div class="card-actions justify-end">
-            <button class="btn">View Assignments</button>
+            <button class="btn" (click)="viewAssignments()">View Assignments</button>
           </div>
         </div>
       </div>
 
-      <!-- Notifications Card -->
+      <!-- Statistics Card -->
       <div class="card w-full bg-secondary text-secondary-content shadow-xl">
         <div class="card-body">
-          <h2 class="card-title">Notifications</h2>
-          <p>You have 2 new messages.</p>
+          <h2 class="card-title">Class Overview</h2>
+          <p>Track student progress, attendance, and performance.</p>
           <div class="card-actions justify-end">
-            <button class="btn">Check Messages</button>
+            <button class="btn" (click)="viewStatistics()">View Statistics</button>
           </div>
         </div>
       </div>
