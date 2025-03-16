@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-teacher-assignments',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './teacher-assignments.component.html',
-  styleUrl: './teacher-assignments.component.css'
+  styleUrl: './teacher-assignments.component.css',
 })
 export class TeacherAssignmentsComponent {
-
+  constructor(){}
 }

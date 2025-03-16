@@ -50,11 +50,19 @@ import { Observable } from 'rxjs';
 import { UserService } from './user.service';
 import { User } from './user.service';
 
+export interface CurrentUser {
+  username: string;
+  password?: string;
+  role: 'student' | 'teacher';
+  classId?: string;
+  _id?: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private currentUser: User | null = null;
+  private currentUser: CurrentUser | null = null;
 
   constructor(
     private auth0: Auth0AngularAuthService,
@@ -119,12 +127,43 @@ export class AuthService {
     }
   }
 
-  getCurrentUser(): User | null {
-    return this.currentUser;
+  // getCurrentUser(): User | null {
+  //   return this.currentUser;
+  // }
+
+  getCurrentUser(): Observable<CurrentUser | null> {
+    return this.user$.pipe(
+      map((user) => {
+        if (!user) {
+          return null;
+        }
+        return {
+          username: user.name,
+          role:
+            user['https://rocketgrades/roles'] &&
+            user['https://rocketgrades/roles'].includes('teacher')
+              ? 'teacher'
+              : 'student',
+          _id: user.sub,
+        };
+      })
+    );
+  }
+
+  getCurrentUserId(): Observable<string | null> {
+    return this.user$.pipe(
+      map((user) => {
+        if (!user) {
+          return null;
+        }
+        return user.sub;
+      })
+    );
   }
 
   isTeacher(): boolean {
     return this.currentUser?.role === 'teacher';
+    return true;
   }
 
   isStudent(): boolean {

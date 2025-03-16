@@ -1,4 +1,4 @@
-<div class="flex min-h-screen bg-base-200 w-screen p-4">
+<!-- <div class="flex min-h-screen bg-base-200 w-screen p-4">
   <div class="w-64 bg-base-100 p-4 shadow-lg">
     <h2 class="text-xl font-bold text-primary mb-4">Student Dashboard</h2>
     <ul class="menu bg-base-100 rounded-box">
@@ -82,11 +82,101 @@
 <div class="w-screen p-4">
   <app-file-upload></app-file-upload>
   <app-logout-button></app-logout-button>
-</div>
-<!-- <div>
-  <h2>Student Dashboard</h2>
-
-  <app-file-upload></app-file-upload>
-
-  <button (click)="logout()">logout</button>
 </div> -->
+
+<div class="flex min-h-screen bg-base-200 w-screen p-4">
+  <!-- Sidebar -->
+  <div class="w-64 bg-base-100 p-4 shadow-lg">
+    <h2 class="text-xl font-bold text-primary mb-4">Student Dashboard</h2>
+    <ul class="menu bg-base-100 rounded-box">
+      <li><a class="active">Home</a></li>
+      <li><a>Courses</a></li>
+      <li><a>Grades</a></li>
+      <li><a>Schedule</a></li>
+      <li><a>Profile</a></li>
+      <li><a>Settings</a></li>
+    </ul>
+  </div>
+
+  <!-- Main Content -->
+  <div class="flex-1 p-6">
+    <!-- Welcome Section -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+      <h1 class="text-2xl font-semibold">Welcome, Student!</h1>
+      <p class="text-gray-600">Here's an overview of your progress.</p>
+    </div>
+
+    <!-- Cards Section -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+      <div class="card w-full bg-primary text-primary-content shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">Enrolled Courses</h2>
+          <p>You are enrolled in 5 courses.</p>
+          <div class="card-actions justify-end">
+            <button class="btn">View Courses</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card w-full bg-accent text-accent-content shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">Latest Grades</h2>
+          <p>Your average grade: <span class="font-bold">87%</span></p>
+          <div class="card-actions justify-end">
+            <button class="btn">View Grades</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card w-full bg-secondary text-secondary-content shadow-xl">
+        <div class="card-body">
+          <h2 class="card-title">Notifications</h2>
+          <p>You have 3 new messages.</p>
+          <div class="card-actions justify-end">
+            <button class="btn">Check Messages</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table Section -->
+    <div class="overflow-x-auto mt-6">
+      <table class="table w-full">
+        <thead>
+          <tr class="bg-base-300">
+            <th>Course</th>
+            <th>Assignment</th>
+            <th>Grade</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Math 101</td>
+            <td>Midterm Exam</td>
+            <td class="text-green-500 font-bold">92%</td>
+          </tr>
+          <tr>
+            <td>History 201</td>
+            <td>Essay</td>
+            <td class="text-yellow-500 font-bold">85%</td>
+          </tr>
+          <tr>
+            <td>Physics 301</td>
+            <td>Lab Report</td>
+            <td class="text-red-500 font-bold">78%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- File Upload and Logout Section -->
+    <div class="mt-16 flex flex-col md:flex-row">
+      <div class="flex-1 flex justify-center items-end">
+        <app-file-upload></app-file-upload>
+      </div>
+      <div class="flex-1 flex justify-center items-end">
+        <app-logout-button class="btn btn-accent"></app-logout-button>
+      </div>
+    </div>
+  </div>
+</div>
