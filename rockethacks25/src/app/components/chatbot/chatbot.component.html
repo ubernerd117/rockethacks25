@@ -1,0 +1,27 @@
+<!-- chatbox.component.html -->
+<div class="chat-container">
+  <div class="messages">
+    <!-- Loop through the messages array and display each message -->
+    <div *ngFor="let message of messages">
+      <div [ngClass]="{'user-message': message.isUser, 'ai-message': !message.isUser}">
+        {{ message.text }}
+      </div>
+    </div>
+
+    <!-- Show loading indicator when the chat is processing -->
+    <div *ngIf="loading" class="loading">Processing...</div>
+  </div>
+
+  <!-- Input field for sending messages -->
+  <div class="input-container">
+    <input 
+      [(ngModel)]="userInput" 
+      (keyup.enter)="sendMessage()" 
+      placeholder="Type your message..." 
+      [disabled]="loading" 
+      autofocus
+    />
+    <button (click)="sendMessage()" [disabled]="loading" class="send-button">Send</button>
+  </div>
+</div>
+
