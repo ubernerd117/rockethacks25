@@ -48,7 +48,7 @@ import { AuthService as Auth0AngularAuthService } from '@auth0/auth0-angular';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { UserService } from './user.service';
-import { User } from '@auth0/auth0-angular';
+import { User } from './user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -81,7 +81,8 @@ export class AuthService {
     return this.auth0.getAccessTokenSilently();
   }
 
-  isTeacher(): Observable<boolean> {
+  //these need to go back to original
+  isAuthTeacher(): Observable<boolean> {
     return this.user$.pipe(
       map((user) => {
         if (!user) {
@@ -93,7 +94,7 @@ export class AuthService {
     );
   }
 
-  isStudent(): Observable<boolean> {
+  isAuthStudent(): Observable<boolean> {
     return this.user$.pipe(
       map((user) => {
         if (!user) {
@@ -116,5 +117,20 @@ export class AuthService {
     } else {
       return false;
     }
+  }
+
+  getCurrentUser(): User | null {
+    return this.currentUser;
+  }
+
+  isTeacher(): boolean {
+    return this.currentUser?.role === 'teacher';
+  }
+
+  isStudent(): boolean {
+    return this.currentUser?.role === 'student';
+  }
+  isLoggedIn(): boolean {
+    return !!this.currentUser;
   }
 }

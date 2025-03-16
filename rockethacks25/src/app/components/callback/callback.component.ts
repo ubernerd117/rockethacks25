@@ -24,7 +24,7 @@ export class CallbackComponent implements OnInit {
       this.isAuthenticated = isAuthenticated;
       this.isLoading = false;
       if (isAuthenticated) {
-        this.auth.isTeacher().subscribe((isTeacher) => {
+        this.auth.isAuthTeacher().subscribe((isTeacher) => {
           if (isTeacher) {
             this.router.navigate(['/teacher']);
           } else {
