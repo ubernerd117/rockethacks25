@@ -22,6 +22,7 @@ import { RouterLink } from '@angular/router';
 export class LoginComponent {
   username = '';
   password = '';
+  showPassword = false; // Initialize as false (hidden)
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -35,5 +36,8 @@ export class LoginComponent {
     } else {
       alert('Invalid username or password.');
     }
+  }
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 }

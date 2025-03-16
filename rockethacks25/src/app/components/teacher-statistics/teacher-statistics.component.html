@@ -1,0 +1,29 @@
+<div class="container mx-auto p-6">
+    <h1 class="text-3xl font-bold text-primary mb-6">Class Statistics</h1>
+  
+    <div class="overflow-x-auto">
+      <table class="table table-zebra w-full">
+        <thead>
+          <tr>
+            <th>Class Name</th>
+            <th>Average Grade</th>
+            <th>Number of Students</th>
+            <th>Assignments Submitted</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let classStat of classStatistics">
+            <td>{{ classStat.className }}</td>
+            <td>
+              <span [class]="getGradeClass(classStat.averageGrade)">
+                {{ classStat.averageGrade }}%
+              </span>
+            </td>
+            <td>{{ classStat.studentCount }}</td>
+            <td>{{ classStat.assignmentsSubmitted }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
