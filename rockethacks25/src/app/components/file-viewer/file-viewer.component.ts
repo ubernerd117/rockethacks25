@@ -21,20 +21,19 @@ export class FileViewerComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const currentUser = this.authService.getCurrentUser();
-    if (currentUser && currentUser.role === 'teacher') {
-      console.log('getting assignments ');
-      const teacherClasses = this.classService.getClassesForTeacher(
-        currentUser.username
-      );
-      const classIds = teacherClasses.map((c) => c.classId);
-      this.assignments =
-        this.assignmentService.getAssignmentsForTeacher(classIds);
-    }
-  }
-
-  viewFile(file: any): void {
-    console.log(`Viewing file: ${file.filename}`);
-    alert('viewing ' + file.filename);
+    //   const currentUser = this.authService.getCurrentUser();
+    //   if (currentUser && currentUser.role === 'teacher') {
+    //     console.log('getting assignments ');
+    //     const teacherClasses = this.classService.getClassesForTeacher(
+    //       currentUser.username
+    //     );
+    //     const classIds = teacherClasses.map((c) => c.classId);
+    //     this.assignments =
+    //       this.assignmentService.getAssignmentsForTeacher(classIds);
+    //   }
+    // }
+    // viewFile(file: any): void {
+    //   console.log(`Viewing file: ${file.filename}`);
+    //   alert('viewing ' + file.filename);
   }
 }

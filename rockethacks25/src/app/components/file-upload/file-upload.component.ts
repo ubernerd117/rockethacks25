@@ -23,22 +23,22 @@ export class FileUploadComponent {
   }
 
   onUpload(): void {
-    if (this.selectedFile) {
-      const currentUser = this.authService.getCurrentUser();
-      if (currentUser && currentUser.classId) {
-        this.assignmentService.addAssignment(
-          this.selectedFile.name,
-          currentUser.username,
-          currentUser.classId
-        );
-        console.log('File Selected:', this.selectedFile);
-        alert('File Uploaded (Dummy)');
-        this.selectedFile = null;
-      } else {
-        alert('Error: Could not determine student or class.');
-      }
-    } else {
-      alert('Please select a file');
-    }
+    //   if (this.selectedFile) {
+    //     const currentUser = this.authService.getCurrentUser();
+    //     if (currentUser && currentUser.classId) {
+    //       this.assignmentService.addAssignment(
+    //         this.selectedFile.name,
+    //         currentUser.username,
+    //         currentUser.classId
+    //       );
+    //       console.log('File Selected:', this.selectedFile);
+    //       alert('File Uploaded (Dummy)');
+    //       this.selectedFile = null;
+    //     } else {
+    //       alert('Error: Could not determine student or class.');
+    //     }
+    //   } else {
+    //     alert('Please select a file');
+    //   }
   }
 }
