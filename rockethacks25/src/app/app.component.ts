@@ -4,6 +4,7 @@ import { LoginComponent } from './components/login/login.component';
 import { FileListComponent } from './components/file-list/file-list.component';
 import { UserListComponent } from './components/user-list/user-list.component';
 import { ChatbotComponent } from './components/chatbot/chatbot.component';
+import { TeacherStudentListComponent } from './components/teacher-student-list/teacher-student-list.component';
 
 @Component({
   selector: 'app-root',
@@ -14,6 +15,7 @@ import { ChatbotComponent } from './components/chatbot/chatbot.component';
     FileListComponent,
     UserListComponent,
     ChatbotComponent,  // Add ChatboxComponent here
+    TeacherStudentListComponent,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],

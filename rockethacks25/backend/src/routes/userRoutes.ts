@@ -5,6 +5,7 @@ import {
   getUser,
   updateUser,
   deleteUser,
+  getStudentsByTeacher,
 } from '../controllers/userController';
 
 const router = express.Router();
@@ -23,12 +24,9 @@ router.get('/students', (req: Request, res: Response, next: NextFunction) => {
   getUsers(req, res, 'student').catch(next);
 });
 
-router.get(
-  '/instructors',
-  (req: Request, res: Response, next: NextFunction) => {
-    getUsers(req, res, 'instructor').catch(next);
-  }
-);
+router.get('/teachers', (req: Request, res: Response, next: NextFunction) => {
+  getUsers(req, res, 'teacher').catch(next);
+});
 
 // Get a single user
 router.get('/:id', (req: Request, res: Response, next: NextFunction) => {
@@ -44,5 +42,12 @@ router.put('/:id', (req: Request, res: Response, next: NextFunction) => {
 router.delete('/:id', (req: Request, res: Response, next: NextFunction) => {
   deleteUser(req, res).catch(next);
 });
+
+router.get(
+  '/teachers/:teacherId/students',
+  (req: Request, res: Response, next: NextFunction) => {
+    getStudentsByTeacher(req, res).catch(next);
+  }
+);
 
 export default router;

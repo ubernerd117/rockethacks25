@@ -5,7 +5,7 @@ export interface IClass extends Document {
   name: string;
   description?: string;
   code: string;
-  instructor: mongoose.Types.ObjectId;
+  teacher: mongoose.Types.ObjectId;
   students: mongoose.Types.ObjectId[];
   assignments: mongoose.Types.ObjectId[];
   createdAt: Date;
@@ -13,12 +13,42 @@ export interface IClass extends Document {
 }
 
 // Create the Class schema
-const ClassSchema: Schema = new Schema({
-  name: {
-    type: String,
-    required: [true, 'Class name is required'],
-    trim: true
+const ClassSchema: Schema = new Schema(
+  {
+    name: {
+      type: String,
+      required: [true, 'Class name is required'],
+      trim: true,
+    },
+    description: {
+      type: String,
+      trim: true,
+    },
+    code: {
+      type: String,
+      required: [true, 'Class code is required'],
+      unique: true,
+      trim: true,
+    },
+    teacher: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: [true, 'Teacher is required'],
+    },
+    students: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
+    assignments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Assignment',
+      },
+    ],
   },
+
   description: {
     type: String,
     trim: true
@@ -29,10 +59,10 @@ const ClassSchema: Schema = new Schema({
     unique: true,
     trim: true
   },
-  instructor: {
+  teacher: {
     type: Schema.Types.ObjectId,
     ref: 'User',
-    required: [true, 'Instructor is required']
+    required: [true, 'Teacher is required']
   },
   students: [{
     type: Schema.Types.ObjectId,
@@ -46,5 +76,6 @@ const ClassSchema: Schema = new Schema({
   timestamps: true
 });
 
+
 // Create and export the Class model
-export default mongoose.model<IClass>('Class', ClassSchema); 
+export default mongoose.model<IClass>('Class', ClassSchema);

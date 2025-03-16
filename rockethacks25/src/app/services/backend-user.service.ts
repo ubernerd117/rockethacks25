@@ -30,8 +30,8 @@ export class BackendUserService {
     return this.http.get<UserListResponse>(`${this.apiUrl}/students`);
   }
 
-  getInstructors(): Observable<UserListResponse> {
-    return this.http.get<UserListResponse>(`${this.apiUrl}/instructors`);
+  getTeachers(): Observable<UserListResponse> {
+    return this.http.get<UserListResponse>(`${this.apiUrl}/teachers`);
   }
 
   getUsers(): Observable<UserListResponse> {

@@ -9,9 +9,9 @@ export const createAssignment = async (req: Request, res: Response) => {
   try {
     const { name, description, dueDate, totalPoints, classId } = req.body;
     
-    // Verify class exists
-    const classObj = await Class.findById(classId);
-    if (!classObj) {
+    // Validate classId exists
+    const classExists = await Class.findById(classId);
+    if (!classExists) {
       return res.status(404).json({
         success: false,
         error: 'Class not found'

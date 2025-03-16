@@ -18,7 +18,7 @@
 <div *ngIf="!isLoading && !error">
   <button (click)="showAll()">All</button>
   <button (click)="showStudents()">Students</button>
-  <button (click)="showTeachers()">Instructors</button>
+  <button (click)="showTeachers()">Teachers</button>
 </div>
 
 <div *ngIf="!isLoading && !error && users.length > 0">
@@ -72,11 +72,11 @@
       Students
     </button>
     <button
-      (click)="showInstructors()"
+      (click)="showTeachers()"
       class="btn btn-sm"
-      [class.btn-active]="userRole === 'instructor'"
+      [class.btn-active]="userRole === 'teacher'"
     >
-      Instructors
+      Teachers
     </button>
   </div>
 

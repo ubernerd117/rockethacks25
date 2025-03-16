@@ -16,7 +16,7 @@ export class UserListComponent implements OnInit {
   users: User[] = [];
   isLoading = false;
   error: string | null = null;
-  userRole: 'student' | 'instructor' | 'all' = 'all';
+  userRole: 'student' | 'teacher' | 'all' = 'all';
 
   constructor(private backendService: BackendUserService) {}
 
@@ -24,7 +24,7 @@ export class UserListComponent implements OnInit {
     this.loadUsers();
   }
 
-  // loadUsers(role?: 'student' | 'instructor') {
+  // loadUsers(role?: 'student' | 'teacher') {
   //   this.isLoading = true;
   //   this.error = null;
   //   this.userService.getUsers(role).subscribe({
@@ -46,8 +46,8 @@ export class UserListComponent implements OnInit {
     let request: Observable<UserListResponse>;
     if (this.userRole === 'student') {
       request = this.backendService.getStudents();
-    } else if (this.userRole === 'instructor') {
-      request = this.backendService.getInstructors();
+    } else if (this.userRole === 'teacher') {
+      request = this.backendService.getTeachers();
     } else {
       request = this.backendService.getUsers();
     }
@@ -68,8 +68,8 @@ export class UserListComponent implements OnInit {
     this.userRole = 'student';
     this.loadUsers();
   }
-  showInstructors() {
-    this.userRole = 'instructor';
+  showTeachers() {
+    this.userRole = 'teacher';
     this.loadUsers();
   }
   showAll() {
