@@ -4,13 +4,20 @@ import { Router, RouterLink } from '@angular/router'; // Import RouterLink
 import { FileViewerComponent } from '../file-viewer/file-viewer.component';
 import { CommonModule } from '@angular/common';
 import { ClassManagementComponent } from '../class-management/class-management.component';
+import { TeacherStudentListComponent } from '../teacher-student-list/teacher-student-list.component';
 
 @Component({
   selector: 'app-teacher-dashboard',
   templateUrl: './teacher-dashboard.component.html',
   styleUrls: ['./teacher-dashboard.component.css'],
   standalone: true,
-  imports: [FileViewerComponent, CommonModule, ClassManagementComponent, RouterLink], // Add RouterLink
+  imports: [
+    FileViewerComponent,
+    CommonModule,
+    ClassManagementComponent,
+    RouterLink,
+    TeacherStudentListComponent,
+  ], // Add RouterLink
 })
 export class TeacherDashboardComponent {
   teacherClasses: any[] = [1, 2, 3]; // Add this line - Initialize teacherClasses
@@ -28,7 +35,7 @@ export class TeacherDashboardComponent {
 
   viewStatistics() {
     this.router.navigate(['/statistics']);
-  } 
+  }
 
   logout() {
     this.authService.logout();

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import User from '../models/User';
+import Class from '../models/Class'; // Import the Class model
 
 // Create a new user
 export const createUser = async (req: Request, res: Response) => {
@@ -46,7 +47,7 @@ export const createUser = async (req: Request, res: Response) => {
 export const getUsers = async (
   req: Request,
   res: Response,
-  role?: 'student' | 'instructor'
+  role?: 'student' | 'teacher'
 ) => {
   try {
     // const { role } = req.query;
@@ -177,6 +178,47 @@ export const deleteUser = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error('Error deleting user:', error);
+    return res.status(500).json({
+      success: false,
+      error: 'Server Error',
+    });
+  }
+};
+
+export const getStudentsByTeacher = async (req: Request, res: Response) => {
+  try {
+    const teacherId = req.params.teacherId;
+
+    // Check if teacher exists
+    const teacher = await User.findById(teacherId);
+    if (!teacher || teacher.role !== 'teacher') {
+      return res.status(404).json({
+        success: false,
+        error: 'Teacher not found',
+      });
+    }
+
+    // Find classes taught by the teacher
+    const classes = await Class.find({ teacher: teacherId });
+
+    // Extract class IDs
+    const classIds = classes.map((c) => c._id);
+
+    // Find students enrolled in those classes
+    const students = await User.find({
+      role: 'student',
+      enrolledClasses: { $in: classIds },
+    })
+      .select('-__v')
+      .sort('username');
+
+    return res.status(200).json({
+      success: true,
+      count: students.length,
+      data: students,
+    });
+  } catch (error) {
+    console.error('Error fetching students by teacher:', error);
     return res.status(500).json({
       success: false,
       error: 'Server Error',
