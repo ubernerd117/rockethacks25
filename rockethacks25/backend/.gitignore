@@ -1,0 +1,20 @@
+# dependencies
+node_modules/
+
+# environment variables
+.env
+
+# build output
+dist/
+
+# logs
+logs
+*.log
+npm-debug.log*
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes 
