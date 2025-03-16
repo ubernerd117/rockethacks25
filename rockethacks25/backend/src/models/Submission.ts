@@ -4,8 +4,8 @@ import mongoose, { Document, Schema } from 'mongoose';
 export interface ISubmission extends Document {
   assignmentId: mongoose.Types.ObjectId;
   studentId: mongoose.Types.ObjectId;
-  fileUrl?: string;
-  fileKey?: string;
+  fileUrl: string;
+  fileKey: string;
   submissionDate: Date;
   gradeReceived?: number;
   feedback?: string;
@@ -28,10 +28,12 @@ const SubmissionSchema: Schema = new Schema({
     required: [true, 'Student ID is required']
   },
   fileUrl: {
-    type: String
+    type: String,
+    required: [true, 'File URL is required']
   },
   fileKey: {
-    type: String
+    type: String,
+    required: [true, 'File key is required']
   },
   submissionDate: {
     type: Date,

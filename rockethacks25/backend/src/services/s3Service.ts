@@ -18,11 +18,13 @@ export const uploadFileToS3 = async (
   file: Express.Multer.File,
   bucketName: string = process.env.AWS_BUCKET_NAME || '',
   folderName: string = '',
-  metadata?: any
+  metadata?: any,
+  customFileName?: string
 ): Promise<AWS.S3.ManagedUpload.SendData> => {
   // Generate unique file name - include submissionId if available
-  const submissionId = metadata?.submissionId ? `__${metadata.submissionId}` : '';
-  const fileName = `${folderName ? folderName + '/' : ''}${Date.now()}-${file.originalname.replace(/\s+/g, '-')}${submissionId}`;
+  const fileName = customFileName 
+    ? `${folderName ? folderName + '/' : ''}${customFileName}` 
+    : `${folderName ? folderName + '/' : ''}${Date.now()}-${file.originalname.replace(/\s+/g, '-')}`;
 
   // Set upload parameters
   const params: AWS.S3.PutObjectRequest = {

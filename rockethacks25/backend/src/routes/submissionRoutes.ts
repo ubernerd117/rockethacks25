@@ -3,6 +3,7 @@ import {
   createSubmission,
   getSubmissionsByAssignment,
   getSubmissionsByStudent,
+  getSubmissionsByClass,
   getSubmission,
   updateSubmission,
   gradeSubmission,
@@ -16,6 +17,11 @@ const router = express.Router();
 // Create a new submission - with file upload
 router.post('/', upload.single('file'), (req: Request, res: Response, next: NextFunction) => {
   createSubmission(req, res).catch(next);
+});
+
+// Get all submissions for a class
+router.get('/class/:classId', (req: Request, res: Response, next: NextFunction) => {
+  getSubmissionsByClass(req, res).catch(next);
 });
 
 // Get all submissions for an assignment
