@@ -12,10 +12,13 @@ import {
   ApplicationConfig,
   importProvidersFrom,
   provideZoneChangeDetection,
+  SecurityContext,
 } from '@angular/core';
 import { routes } from './app.routes';
 import { environment } from './environments/environment';
 import { AuthModule } from '@auth0/auth0-angular';
+import { MarkdownModule } from 'ngx-markdown';
+import 'prismjs';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -29,6 +32,9 @@ export const appConfig: ApplicationConfig = {
           redirect_uri: window.location.origin + '/callback',
           audience: environment.auth0Audience,
         },
+      }),
+      MarkdownModule.forRoot({
+        sanitize: SecurityContext.NONE
       })
     ),
     provideHttpClient(),

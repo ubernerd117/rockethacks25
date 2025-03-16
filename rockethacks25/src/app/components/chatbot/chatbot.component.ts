@@ -3,6 +3,7 @@ import { ChatService } from '../../services/chat.service';  // Your chat service
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';  // Import CommonModule for ngClass
 import { HttpClientModule } from '@angular/common/http';  // Import HttpClientModule
+import { MarkdownComponent } from 'ngx-markdown';
 
 @Component({
   selector: 'app-chatbot',
@@ -13,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';  // Import HttpClientMo
     FormsModule,
     CommonModule,
     HttpClientModule,  // Add HttpClientModule here
+    MarkdownComponent,
   ],  // Add FormsModule to the imports array
 })
 export class ChatbotComponent {

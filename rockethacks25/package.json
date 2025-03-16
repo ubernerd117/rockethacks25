@@ -22,7 +22,9 @@
     "@types/mongoose": "^5.11.96",
     "auth0-angular": "^5.0.0",
     "aws-amplify": "^6.13.5",
+    "marked": "^15.0.7",
     "mongoose": "^8.12.1",
+    "ngx-markdown": "^19.1.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

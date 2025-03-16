@@ -13,8 +13,14 @@
   <div class="messages">
     <!-- Loop through the messages array and display each message -->
     <div *ngFor="let message of messages">
-      <div [ngClass]="{'user-message': message.isUser, 'ai-message': !message.isUser}">
+      <!-- User messages displayed normally -->
+      <div *ngIf="message.isUser" class="user-message">
         {{ message.text }}
+      </div>
+      
+      <!-- AI messages displayed with markdown -->
+      <div *ngIf="!message.isUser" class="ai-message">
+        <markdown [data]="message.text"></markdown>
       </div>
     </div>
 
