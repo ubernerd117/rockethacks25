@@ -6,13 +6,19 @@ import {
   updateUser,
   deleteUser,
   getStudentsByTeacher,
+  loginUser,
 } from '../controllers/userController';
 
 const router = express.Router();
 
-// Create a new user
+// Create a new user (register)
 router.post('/', (req: Request, res: Response, next: NextFunction) => {
   createUser(req, res).catch(next);
+});
+
+// User login
+router.post('/login', (req: Request, res: Response, next: NextFunction) => {
+  loginUser(req, res).catch(next);
 });
 
 // Get all users

@@ -1,11 +1,12 @@
 import { Request, Response } from 'express';
 import User from '../models/User';
 import Class from '../models/Class'; // Import the Class model
+import jwt from 'jsonwebtoken';
 
 // Create a new user
 export const createUser = async (req: Request, res: Response) => {
   try {
-    const { username, email, role } = req.body;
+    const { username, email, password, role } = req.body;
 
     // Check if username or email already exists
     const existingUser = await User.findOne({
@@ -23,18 +24,72 @@ export const createUser = async (req: Request, res: Response) => {
     const user = new User({
       username,
       email,
+      password, // Password will be hashed by the pre-save middleware
       role: role || 'student',
     });
 
     // Save user
     await user.save();
 
+    // Don't return password in response
+    const userResponse = user.toObject();
+    delete (userResponse as any).password;
+
     return res.status(201).json({
       success: true,
-      data: user,
+      data: userResponse,
     });
   } catch (error) {
     console.error('Error creating user:', error);
+    return res.status(500).json({
+      success: false,
+      error: 'Server Error',
+      message: error instanceof Error ? error.message : 'Unknown error',
+    });
+  }
+};
+
+// User login
+export const loginUser = async (req: Request, res: Response) => {
+  try {
+    const { email, password } = req.body;
+
+    // Find user and include password for comparison
+    const user = await User.findOne({ email }).select('+password');
+
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        error: 'Invalid credentials',
+      });
+    }
+
+    // Check if password matches
+    const isMatch = await user.comparePassword(password);
+
+    if (!isMatch) {
+      return res.status(401).json({
+        success: false,
+        error: 'Invalid credentials',
+      });
+    }
+
+    // Generate JWT token
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET || 'rockethacks25_jwt_secret_key', {
+      expiresIn: '1d', // Token expires in 1 day
+    });
+
+    // Don't return password in response
+    const userResponse = user.toObject();
+    delete (userResponse as any).password;
+
+    return res.status(200).json({
+      success: true,
+      token,
+      data: userResponse,
+    });
+  } catch (error) {
+    console.error('Error logging in:', error);
     return res.status(500).json({
       success: false,
       error: 'Server Error',
@@ -105,7 +160,7 @@ export const getUser = async (req: Request, res: Response) => {
 // Update user
 export const updateUser = async (req: Request, res: Response) => {
   try {
-    const { username, email } = req.body;
+    const { username, email, password, role } = req.body;
 
     // Find the user
     const user = await User.findById(req.params.id);
@@ -141,12 +196,26 @@ export const updateUser = async (req: Request, res: Response) => {
       user.email = email;
     }
 
+    // Update password if provided
+    if (password) {
+      user.password = password; // Will be hashed by the pre-save hook
+    }
+
+    // Update role if provided
+    if (role) {
+      user.role = role;
+    }
+
     // Save updated user
     await user.save();
 
+    // Don't return password in response
+    const userResponse = user.toObject();
+    delete (userResponse as any).password;
+
     return res.status(200).json({
       success: true,
-      data: user,
+      data: userResponse,
     });
   } catch (error) {
     console.error('Error updating user:', error);

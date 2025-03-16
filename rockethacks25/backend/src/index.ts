@@ -6,6 +6,7 @@ import assignmentRoutes from './routes/assignmentRoutes';
 import classRoutes from './routes/classRoutes';
 import submissionRoutes from './routes/submissionRoutes';
 import userRoutes from './routes/userRoutes';
+import chatRoutes from './routes/chatRoutes';
 import { connectDB } from './config/db';
 import multer from 'multer';
 
@@ -28,6 +29,7 @@ app.use('/api/assignments', assignmentRoutes);
 app.use('/api/classes', classRoutes);
 app.use('/api/submissions', submissionRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/chat', chatRoutes);
 
 // Basic route for testing
 app.get('/', (req, res) => {
