@@ -1,25 +1,19 @@
-<div>
-  <h2>Login</h2>
-  <form (ngSubmit)="onSubmit()">
-    <div>
-      <label for="username">Username:</label>
-      <input
-        type="text"
-        id="username"
-        [(ngModel)]="username"
-        name="username"
-        required
-      />
-    </div>
-    <div>
-      <label for="password">Password:</label>
-      <input
-        type="password"
-        id="password"
-        [(ngModel)]="password"
-        name="password"
-      />
-    </div>
-    <button type="submit">Login</button>
-  </form>
+<div class="auth-container">
+  <h2>Welcome to RocketHacks25</h2>
+  
+  <!-- Show login button when not authenticated -->
+  <div *ngIf="!isAuthenticated" class="login-section">
+    <p>Please log in to access your dashboard</p>
+    <button (click)="login()" class="login-button">
+      Log in with Auth0
+    </button>
+  </div>
+  
+  <!-- Show logout button when authenticated -->
+  <div *ngIf="isAuthenticated" class="logout-section">
+    <p>You are logged in</p>
+    <button (click)="logout()" class="logout-button">
+      Log out
+    </button>
+  </div>
 </div>

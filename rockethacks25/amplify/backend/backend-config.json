@@ -1,83 +1,31 @@
 {
-  "api": {
-    "aniceapi": {
-      "dependsOn": [
+  "api": {},
+  "auth": {},
+  "function": {},
+  "hosting": {
+    "amplifyhosting": {
+      "lastPushTimeStamp": "2025-03-16T00:58:33.186Z",
+      "service": "amplifyhosting",
+      "type": "cicd"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_hosting_amplifyhosting_appId": {
+      "usedBy": [
         {
-          "attributes": [
-            "Name",
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "rockethacks25f312afce"
-        },
-        {
-          "attributes": [
-            "Name",
-            "Arn"
-          ],
-          "category": "function",
-          "resourceName": "rockethacks2"
+          "category": "hosting",
+          "resourceName": "amplifyhosting"
         }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "API Gateway"
-    }
-  },
-  "auth": {
-    "rockethacks2514e7fad8": {
-      "customAuth": false,
-      "dependsOn": [],
-      "frontendAuthConfig": {
-        "mfaConfiguration": "OFF",
-        "mfaTypes": [
-          "SMS"
-        ],
-        "passwordProtectionSettings": {
-          "passwordPolicyCharacters": [],
-          "passwordPolicyMinLength": 8
-        },
-        "signupAttributes": [
-          "EMAIL"
-        ],
-        "socialProviders": [],
-        "usernameAttributes": [
-          "EMAIL"
-        ],
-        "verificationMechanisms": [
-          "EMAIL"
-        ]
-      },
-      "providerPlugin": "awscloudformation",
-      "service": "Cognito"
-    }
-  },
-  "function": {
-    "rockethacks2": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
+      ]
     },
-    "rockethacks25f312afce": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
+    "AMPLIFY_hosting_amplifyhosting_type": {
+      "usedBy": [
+        {
+          "category": "hosting",
+          "resourceName": "amplifyhosting"
+        }
+      ]
     }
   },
-  "storage": {
-    "rockethacksStorage": {
-      "dependsOn": [
-        {
-          "attributes": [
-            "Name",
-            "Arn",
-            "LambdaExecutionRole"
-          ],
-          "category": "function",
-          "resourceName": "rockethacks2"
-        }
-      ],
-      "providerPlugin": "awscloudformation",
-      "service": "S3"
-    }
-  }
+  "storage": {}
 }

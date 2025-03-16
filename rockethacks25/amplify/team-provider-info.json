@@ -12,12 +12,11 @@
       "AmplifyAppId": "d12avfyjztgntk"
     },
     "categories": {
-      "function": {
-        "rockethacks25f312afce": {},
-        "rockethacks2": {}
-      },
-      "auth": {
-        "rockethacks2514e7fad8": {}
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d12avfyjztgntk",
+          "type": "cicd"
+        }
       }
     }
   }
