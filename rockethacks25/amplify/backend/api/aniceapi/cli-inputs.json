@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "paths": {
+    "/items": {
+      "name": "/items",
+      "lambdaFunction": "rockethacks25f312afce",
+      "permissions": {
+        "setting": "open"
+      }
+    },
+    "/assignments/{assignmentId}": {
+      "name": "/assignments/{assignmentId}",
+      "lambdaFunction": "rockethacks2",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "resourceName": "rockethacksStorage",
+  "policyUUID": "a9ae5c9c",
+  "bucketName": "fileuploads",
+  "storageAccess": "auth",
+  "guestAccess": [],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ],
+  "triggerFunction": "rockethacks2",
+  "groupAccess": {}
+}

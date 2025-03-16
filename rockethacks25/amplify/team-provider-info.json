@@ -1,0 +1,24 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-rockethacks25-dev-4b9be-authRole",
+      "UnauthRoleArn": "arn:aws:iam::376129853470:role/amplify-rockethacks25-dev-4b9be-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::376129853470:role/amplify-rockethacks25-dev-4b9be-authRole",
+      "Region": "us-west-2",
+      "DeploymentBucketName": "amplify-rockethacks25-dev-4b9be-deployment",
+      "UnauthRoleName": "amplify-rockethacks25-dev-4b9be-unauthRole",
+      "StackName": "amplify-rockethacks25-dev-4b9be",
+      "StackId": "arn:aws:cloudformation:us-west-2:376129853470:stack/amplify-rockethacks25-dev-4b9be/c57d5920-01ff-11f0-8ecb-026c69a265cd",
+      "AmplifyAppId": "d12avfyjztgntk"
+    },
+    "categories": {
+      "function": {
+        "rockethacks25f312afce": {},
+        "rockethacks2": {}
+      },
+      "auth": {
+        "rockethacks2514e7fad8": {}
+      }
+    }
+  }
+}
