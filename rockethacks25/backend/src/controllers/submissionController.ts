@@ -57,15 +57,25 @@ export const createSubmission = async (req: Request, res: Response) => {
     // If file is uploaded, process it
     if (req.file) {
       const folderName = 'submissions';
-      const result = await uploadFileToS3(req.file, undefined, folderName);
+      
+      // First save the submission to get an ID
+      await submission.save();
+      
+      // Pass submission ID as metadata to help with auto-grading
+      const result = await uploadFileToS3(req.file, undefined, folderName, {
+        submissionId: submission._id ? submission._id.toString() : ''
+      });
       
       // Update submission with file info
       submission.fileUrl = result.Location;
       submission.fileKey = result.Key;
+      
+      // Save again with the file info
+      await submission.save();
+    } else {
+      // Save submission if no file
+      await submission.save();
     }
-    
-    // Save submission
-    await submission.save();
     
     // Add submission to assignment
     await Assignment.findByIdAndUpdate(assignmentId, {
@@ -280,6 +290,44 @@ export const deleteSubmission = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error('Error deleting submission:', error);
+    return res.status(500).json({
+      success: false,
+      error: 'Server Error'
+    });
+  }
+};
+
+// Update submission grade
+export const updateSubmissionGrade = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    const { gradeReceived, feedback, autoGraded, gradeDetails } = req.body;
+    
+    // Update submission
+    const submission = await Submission.findByIdAndUpdate(
+      id,
+      { 
+        gradeReceived, 
+        feedback, 
+        autoGraded,
+        autoGradingDetails: gradeDetails
+      },
+      { new: true }
+    );
+    
+    if (!submission) {
+      return res.status(404).json({
+        success: false,
+        error: 'Submission not found'
+      });
+    }
+    
+    return res.status(200).json({
+      success: true,
+      data: submission
+    });
+  } catch (error) {
+    console.error('Error updating submission grade:', error);
     return res.status(500).json({
       success: false,
       error: 'Server Error'

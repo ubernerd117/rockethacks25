@@ -9,6 +9,8 @@ export interface ISubmission extends Document {
   submissionDate: Date;
   gradeReceived?: number;
   feedback?: string;
+  autoGraded?: boolean;
+  autoGradingDetails?: any;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -41,6 +43,13 @@ const SubmissionSchema: Schema = new Schema({
   },
   feedback: {
     type: String
+  },
+  autoGraded: {
+    type: Boolean,
+    default: false
+  },
+  autoGradingDetails: {
+    type: Schema.Types.Mixed
   }
 }, {
   timestamps: true
