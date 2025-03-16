@@ -6,7 +6,8 @@ import {
   getSubmission,
   updateSubmission,
   gradeSubmission,
-  deleteSubmission
+  deleteSubmission,
+  updateSubmissionGrade
 } from '../controllers/submissionController';
 import upload from '../middleware/upload';
 
@@ -37,9 +38,14 @@ router.put('/:id', upload.single('file'), (req: Request, res: Response, next: Ne
   updateSubmission(req, res).catch(next);
 });
 
-// Grade a submission
+// Manual grade a submission (by instructor)
 router.put('/:id/grade', (req: Request, res: Response, next: NextFunction) => {
   gradeSubmission(req, res).catch(next);
+});
+
+// Auto grade a submission (by Lambda)
+router.put('/:id/auto-grade', (req: Request, res: Response, next: NextFunction) => {
+  updateSubmissionGrade(req, res).catch(next);
 });
 
 // Delete a submission

@@ -17,20 +17,20 @@ const s3 = new AWS.S3();
 export const uploadFileToS3 = async (
   file: Express.Multer.File,
   bucketName: string = process.env.AWS_BUCKET_NAME || '',
-  folderName: string = ''
+  folderName: string = '',
+  metadata?: any
 ): Promise<AWS.S3.ManagedUpload.SendData> => {
-  // Generate unique file name
-  const fileName = `${folderName ? folderName + '/' : ''}${Date.now()}-${file.originalname.replace(/\s+/g, '-')}`;
+  // Generate unique file name - include submissionId if available
+  const submissionId = metadata?.submissionId ? `__${metadata.submissionId}` : '';
+  const fileName = `${folderName ? folderName + '/' : ''}${Date.now()}-${file.originalname.replace(/\s+/g, '-')}${submissionId}`;
 
-  console.log(`Attempting to upload file to S3 bucket: ${bucketName}, key: ${fileName}`);
-  
   // Set upload parameters
   const params: AWS.S3.PutObjectRequest = {
     Bucket: bucketName,
     Key: fileName,
     Body: file.buffer,
-    ContentType: file.mimetype
-    // Removed ACL parameter which might be causing issues
+    ContentType: file.mimetype,
+    Metadata: metadata || {} // Store additional metadata
   };
 
   try {

@@ -1,0 +1,54 @@
+service: pdf-autograder
+
+provider:
+  name: aws
+  runtime: python3.12
+  region: ${env:AWS_REGION, 'us-west-2'}
+  memorySize: 1024
+  timeout: 300
+  environment:
+    GOOGLE_API_KEY: ${env:GOOGLE_API_KEY}
+    API_URL: ${env:API_URL}
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - s3:GetObject
+          Resource: "arn:aws:s3:::${env:BUCKET_NAME}/*"
+
+functions:
+  grader:
+    handler: lambda_function.lambda_handler
+    layers:
+      - {Ref: PdfAutograderLambdaLayerLambdaLayer}
+    events:
+      # S3 event trigger
+      - s3:
+          bucket: ${env:BUCKET_NAME}
+          existing: true
+          event: s3:ObjectCreated:*
+          rules:
+            - prefix: submissions/
+            - suffix: .pdf
+
+layers:
+  pdfAutograderLambdaLayer:
+    name: pdf-autograder-layer-${sls:stage}
+    description: Dependencies for PDF autograder
+    compatibleRuntimes:
+      - python3.12
+    path: lambda-layer
+
+# Packaging config
+package:
+  individually: true
+  patterns:
+    - '!node_modules/**'
+    - '!.venv/**'
+    - '!__pycache__/**'
+    - '!.git/**'
+    - '!.serverless/**'
+    - lambda_function.py
+    - grader/**
+    - requirements.txt
