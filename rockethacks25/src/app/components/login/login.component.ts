@@ -26,14 +26,14 @@ export class LoginComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit(): void {
-    // if (this.authService.login(this.username, this.password)) {
-    //   if (this.authService.isTeacher()) {
-    //     this.router.navigate(['/teacher']);
-    //   } else if (this.authService.isStudent()) {
-    //     this.router.navigate(['/student']);
-    //   }
-    // } else {
-    //   alert('Invalid username or password.');
-    // }
+    if (this.authService.login(this.username, this.password)) {
+      if (this.authService.isTeacher()) {
+        this.router.navigate(['/teacher']);
+      } else if (this.authService.isStudent()) {
+        this.router.navigate(['/student']);
+      }
+    } else {
+      alert('Invalid username or password.');
+    }
   }
 }

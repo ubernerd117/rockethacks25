@@ -1,7 +1,5 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
-
 
 // export const appConfig: ApplicationConfig = {
 //   providers: [
@@ -15,11 +13,9 @@ import {
   importProvidersFrom,
   provideZoneChangeDetection,
 } from '@angular/core';
-import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { environment } from './environments/environment';
 import { AuthModule } from '@auth0/auth0-angular';
-import { provideHttpClient } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
   providers: [

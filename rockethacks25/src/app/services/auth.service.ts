@@ -47,12 +47,19 @@ import { Injectable } from '@angular/core';
 import { AuthService as Auth0AngularAuthService } from '@auth0/auth0-angular';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { UserService } from './user.service';
+import { User } from '@auth0/auth0-angular';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private auth0: Auth0AngularAuthService) {}
+  private currentUser: User | null = null;
+
+  constructor(
+    private auth0: Auth0AngularAuthService,
+    private userService: UserService
+  ) {}
 
   loginWithRedirect(options?: any): void {
     this.auth0.loginWithRedirect(options); // Pass options to Auth0
@@ -96,5 +103,18 @@ export class AuthService {
         return roles && roles.includes('student');
       })
     );
+  }
+
+  login(username: string, password?: string): boolean {
+    const user = this.userService
+      .getUsers()
+      .find((u) => u.username === username && u.password === password);
+
+    if (user) {
+      this.currentUser = user;
+      return true;
+    } else {
+      return false;
+    }
   }
 }
