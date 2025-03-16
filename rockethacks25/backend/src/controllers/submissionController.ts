@@ -3,6 +3,7 @@ import Submission from '../models/Submission';
 import Assignment from '../models/Assignment';
 import User from '../models/User';
 import { uploadFileToS3, deleteFileFromS3 } from '../services/s3Service';
+import { gradeSubmission as aiGradeSubmission } from '../services/aiGradingService';
 
 // Create a new submission
 export const createSubmission = async (req: Request, res: Response) => {
@@ -464,6 +465,67 @@ export const getSubmissionsByClass = async (req: Request, res: Response) => {
     });
   } catch (error) {
     console.error('Error fetching class submissions:', error);
+    return res.status(500).json({
+      success: false,
+      error: 'Server Error'
+    });
+  }
+};
+
+// Auto-grade a submission
+export const autoGradeSubmission = async (req: Request, res: Response) => {
+  try {
+    const submissionId = req.params.id;
+    
+    // Find submission with properly populated assignmentId
+    const submission = await Submission.findById(submissionId)
+      .populate({
+        path: 'assignmentId',
+        select: 'name description'
+      });
+    
+    if (!submission) {
+      return res.status(404).json({
+        success: false,
+        error: 'Submission not found'
+      });
+    }
+    
+    if (!submission.fileKey) {
+      return res.status(400).json({
+        success: false,
+        error: 'Submission has no file to grade'
+      });
+    }
+    
+    // Use type assertion to access the populated assignment properties
+    // This assumes that the populate() call above worked correctly
+    const assignmentData = submission.assignmentId as any;
+    const assignmentName = assignmentData.name || 'Assignment';
+    const assignmentInstructions = assignmentData.description || '';
+    
+    // Call AI grading service
+    const gradeResult = await aiGradeSubmission(
+      submissionId,
+      submission.fileKey,
+      assignmentName,
+      assignmentInstructions
+    );
+    
+    // Update submission with grade
+    submission.gradeReceived = gradeResult.grade;
+    submission.feedback = gradeResult.feedback;
+    submission.autoGraded = true;
+    submission.autoGradingDetails = gradeResult.details;
+    
+    await submission.save();
+    
+    return res.status(200).json({
+      success: true,
+      data: submission
+    });
+  } catch (error) {
+    console.error('Error auto-grading submission:', error);
     return res.status(500).json({
       success: false,
       error: 'Server Error'

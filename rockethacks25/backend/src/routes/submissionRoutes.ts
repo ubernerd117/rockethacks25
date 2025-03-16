@@ -8,7 +8,8 @@ import {
   updateSubmission,
   gradeSubmission,
   deleteSubmission,
-  updateSubmissionGrade
+  updateSubmissionGrade,
+  autoGradeSubmission
 } from '../controllers/submissionController';
 import upload from '../middleware/upload';
 
@@ -52,6 +53,11 @@ router.put('/:id/grade', (req: Request, res: Response, next: NextFunction) => {
 // Auto grade a submission (by Lambda)
 router.put('/:id/auto-grade', (req: Request, res: Response, next: NextFunction) => {
   updateSubmissionGrade(req, res).catch(next);
+});
+
+// Auto grade a submission (with AI)
+router.post('/:id/auto-grade', (req: Request, res: Response, next: NextFunction) => {
+  autoGradeSubmission(req, res).catch(next);
 });
 
 // Delete a submission

@@ -1,5 +1,6 @@
 import AWS from 'aws-sdk';
 import dotenv from 'dotenv';
+import * as fs from 'fs';
 
 dotenv.config();
 
@@ -89,6 +90,25 @@ export const deleteFileFromS3 = async (
     return await s3.deleteObject(params).promise();
   } catch (error) {
     console.error('Error deleting file from S3:', error);
+    throw error;
+  }
+};
+
+export const downloadFileFromS3 = async (
+  key: string,
+  localFilePath: string,
+  bucketName: string = process.env.AWS_BUCKET_NAME || ''
+): Promise<void> => {
+  const params = {
+    Bucket: bucketName,
+    Key: key
+  };
+
+  try {
+    const { Body } = await s3.getObject(params).promise();
+    fs.writeFileSync(localFilePath, Body as Buffer);
+  } catch (error) {
+    console.error('Error downloading file from S3:', error);
     throw error;
   }
 }; 
