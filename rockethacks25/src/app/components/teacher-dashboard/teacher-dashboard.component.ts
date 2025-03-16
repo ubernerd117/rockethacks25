@@ -4,6 +4,7 @@ import { Router, RouterLink } from '@angular/router'; // Import RouterLink
 import { FileViewerComponent } from '../file-viewer/file-viewer.component';
 import { CommonModule } from '@angular/common';
 import { ClassManagementComponent } from '../class-management/class-management.component';
+import { ChatbotComponent } from '../chatbot/chatbot.component';
 import { TeacherStudentListComponent } from '../teacher-student-list/teacher-student-list.component';
 
 @Component({
@@ -11,6 +12,7 @@ import { TeacherStudentListComponent } from '../teacher-student-list/teacher-stu
   templateUrl: './teacher-dashboard.component.html',
   styleUrls: ['./teacher-dashboard.component.css'],
   standalone: true,
+  imports: [FileViewerComponent, CommonModule, ClassManagementComponent, RouterLink, ChatbotComponent, ChatbotComponent], // Add RouterLink
   imports: [
     FileViewerComponent,
     CommonModule,
