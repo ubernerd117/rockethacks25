@@ -1,5 +1,9 @@
+import {
+  uploadFileToS3,
+  listFilesFromS3,
+  deleteFileFromS3,
+} from '../services/s3Service';
 import { Request, Response } from 'express';
-import { uploadFileToS3, listFilesFromS3, deleteFileFromS3 } from '../services/s3Service';
 
 // Upload a file to S3
 export const uploadFile = async (req: Request, res: Response) => {
@@ -7,9 +11,9 @@ export const uploadFile = async (req: Request, res: Response) => {
     console.log('Upload request received:', {
       headers: req.headers['content-type'],
       hasFile: !!req.file,
-      body: req.body
+      body: req.body,
     });
-    
+
     if (!req.file) {
       return res.status(400).json({ error: 'No file uploaded' });
     }
@@ -17,7 +21,7 @@ export const uploadFile = async (req: Request, res: Response) => {
     console.log('File details:', {
       originalname: req.file.originalname,
       mimetype: req.file.mimetype,
-      size: req.file.size
+      size: req.file.size,
     });
 
     // Get folder name from request if provided
@@ -29,7 +33,7 @@ export const uploadFile = async (req: Request, res: Response) => {
     console.log('Upload successful:', {
       location: result.Location,
       key: result.Key,
-      bucket: result.Bucket
+      bucket: result.Bucket,
     });
 
     // Return success response
@@ -37,22 +41,22 @@ export const uploadFile = async (req: Request, res: Response) => {
       message: 'File uploaded successfully',
       fileUrl: result.Location,
       key: result.Key,
-      bucket: result.Bucket
+      bucket: result.Bucket,
     });
   } catch (error) {
     console.error('Error uploading file:', error);
-    
+
     if (error instanceof Error) {
       console.error('Error details:', {
         message: error.message,
         name: error.name,
-        stack: error.stack
+        stack: error.stack,
       });
     }
-    
-    return res.status(500).json({ 
-      error: 'Failed to upload file', 
-      message: error instanceof Error ? error.message : 'Unknown error'
+
+    return res.status(500).json({
+      error: 'Failed to upload file',
+      message: error instanceof Error ? error.message : 'Unknown error',
     });
   }
 };
@@ -61,23 +65,23 @@ export const uploadFile = async (req: Request, res: Response) => {
 export const listFiles = async (req: Request, res: Response) => {
   try {
     // Get folder name from request if provided
-    const folderName = req.query.folder as string || '';
+    const folderName = (req.query.folder as string) || '';
 
     // List files from S3
     const files = await listFilesFromS3(undefined, folderName);
 
     // Format response
-    const formattedFiles = files.map(file => ({
+    const formattedFiles = files.map((file) => ({
       key: file.Key,
       lastModified: file.LastModified,
       size: file.Size,
-      url: `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${file.Key}`
+      url: `https://${process.env.AWS_BUCKET_NAME}.s3.${process.env.AWS_REGION}.amazonaws.com/${file.Key}`,
     }));
 
     // Return success response
     return res.status(200).json({
       message: 'Files retrieved successfully',
-      files: formattedFiles
+      files: formattedFiles,
     });
   } catch (error) {
     console.error('Error listing files:', error);
@@ -99,10 +103,10 @@ export const deleteFile = async (req: Request, res: Response) => {
 
     // Return success response
     return res.status(200).json({
-      message: 'File deleted successfully'
+      message: 'File deleted successfully',
     });
   } catch (error) {
     console.error('Error deleting file:', error);
     return res.status(500).json({ error: 'Failed to delete file' });
   }
-}; 
+};

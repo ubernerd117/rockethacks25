@@ -7,6 +7,7 @@ import classRoutes from './routes/classRoutes';
 import submissionRoutes from './routes/submissionRoutes';
 import userRoutes from './routes/userRoutes';
 import { connectDB } from './config/db';
+import multer from 'multer';
 
 // Load environment variables
 dotenv.config();
@@ -36,4 +37,4 @@ app.get('/', (req, res) => {
 // Start server
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-}); 
+});

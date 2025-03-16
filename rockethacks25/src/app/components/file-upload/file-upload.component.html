@@ -1,6 +1,8 @@
-<!-- file-upload.component.html -->
-<div>
+<!-- <div>
   <h3>Upload Assignment</h3>
   <input type="file" (change)="onFileSelected($event)" />
   <button (click)="onUpload()" [disabled]="!selectedFile">Upload</button>
-</div>
+</div> -->
+
+<input type="file" (change)="onFileSelected($event)" />
+<button (click)="onUpload()">Upload</button>

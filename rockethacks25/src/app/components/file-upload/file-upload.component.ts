@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 import { AssignmentService } from '../../services/assignment.service';
+import { FileService } from '../../services/file.service'; // Import FileService
 
 @Component({
   selector: 'app-file-upload',
@@ -15,7 +16,8 @@ export class FileUploadComponent {
 
   constructor(
     private authService: AuthService,
-    private assignmentService: AssignmentService
+    private assignmentService: AssignmentService,
+    private fileService: FileService // Inject FileService
   ) {}
 
   onFileSelected(event: any): void {
@@ -46,14 +48,30 @@ export class FileUploadComponent {
     if (this.selectedFile) {
       const currentUser = this.authService.getCurrentUser();
       if (currentUser && currentUser.classId) {
-        this.assignmentService.addAssignment(
-          this.selectedFile.name,
-          currentUser.username,
-          currentUser.classId
-        );
+        // Now call fileService.uploadFile()
+        this.fileService
+          .uploadFile(this.selectedFile, 'submissions') // folder name is optional.
+          .subscribe({
+            next: (event) => {
+              console.log('File uploaded successfully', event);
+              // Handle successful upload, e.g., show a success message
+              alert('File Uploaded (Actually)');
+              this.selectedFile = null;
+            },
+            error: (error) => {
+              console.error('Error uploading file', error);
+              // Handle upload error, e.g., show an error message
+              alert('Error uploading the file');
+            },
+          });
+        // this.assignmentService.addAssignment(
+        //     this.selectedFile.name,
+        //     currentUser.username,
+        //     currentUser.classId
+        // );
         console.log('File Selected:', this.selectedFile);
-        alert('File Uploaded (Dummy)');
-        this.selectedFile = null;
+        // alert('File Uploaded (Dummy)');
+        // this.selectedFile = null;
       } else {
         alert('Error: Could not determine student or class.');
       }
