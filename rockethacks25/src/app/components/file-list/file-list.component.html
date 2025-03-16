@@ -1,0 +1,19 @@
+<div *ngIf="isLoading">Loading files...</div>
+<div *ngIf="error" class="error">{{ error }}</div>
+
+<div *ngIf="!isLoading && !error && files.length > 0">
+  <h3>Files in S3</h3>
+  <ul>
+    <li *ngFor="let file of files">
+      <a [href]="file.url" target="_blank">{{ file.key }}</a>
+      <span>
+        (Size: {{ file.size }} bytes, Last Modified:
+        {{ file.lastModified | date : "medium" }})</span
+      >
+    </li>
+  </ul>
+</div>
+
+<div *ngIf="!isLoading && !error && files.length === 0">
+  <p>No files found.</p>
+</div>
