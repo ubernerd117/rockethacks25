@@ -61,19 +61,21 @@ import { Observable, tap } from 'rxjs';
 export class AuthGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {}
 
-  canActivateAuth(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<boolean> {
-    return this.authService.isAuthenticated$.pipe(
-      tap((loggedIn) => {
-        if (!loggedIn) {
-          // When the user is not authenticated, redirect to the login page and save the url.
-          // this.auth.loginWithRedirect({ appState: { target: state.url } });
-        }
-      })
-    );
-  }
+  // canActivate(
+  //   next: ActivatedRouteSnapshot,
+  //   state: RouterStateSnapshot
+  // ): Observable<boolean> {
+  //   return this.authService.isAuthenticated$.pipe(
+  //     tap((loggedIn) => {
+  //       if (!loggedIn) {
+  //         // When the user is not authenticated, redirect to the login page and save the url.
+  //         this.authService.loginWithRedirect({
+  //           appState: { target: state.url },
+  //         });
+  //       }
+  //     })
+  //   );
+  // }
 
   canActivate(
     route: ActivatedRouteSnapshot,
