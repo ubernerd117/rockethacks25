@@ -1,1 +1,14 @@
-<p>auth0-signup works!</p>
+<!-- <button (click)="signup()">Sign Up</button>
+
+<select [(ngModel)]="role">
+  <option value="student">Student</option>
+  <option value="teacher">Teacher</option>
+</select> -->
+
+<div class="flex items-center space-x-4">
+  <select [(ngModel)]="role" class="select select-bordered">
+    <option value="student">Student</option>
+    <option value="teacher">Teacher</option>
+  </select>
+  <button (click)="signup()" class="btn btn-secondary">Sign Up</button>
+</div>

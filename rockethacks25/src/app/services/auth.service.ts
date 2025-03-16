@@ -80,7 +80,7 @@ export class AuthService {
         if (!user) {
           return false;
         }
-        const roles = user['https://my-app.com/roles'] as string[];
+        const roles = user['https://rocketgrades/roles'] as string[];
         return roles && roles.includes('teacher');
       })
     );
@@ -92,7 +92,7 @@ export class AuthService {
         if (!user) {
           return false;
         }
-        const roles = user['https://my-app.com/roles'] as string[];
+        const roles = user['https://rocketgrades/roles'] as string[];
         return roles && roles.includes('student');
       })
     );
