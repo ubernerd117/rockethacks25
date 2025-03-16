@@ -6,21 +6,21 @@ import mongoose from 'mongoose';
 // Create a new class
 export const createClass = async (req: Request, res: Response) => {
   try {
-    const { name, description, code, instructorId } = req.body;
+    const { name, description, code, teacherId } = req.body;
     
-    // Check if instructor exists and is an instructor
-    const instructor = await User.findById(instructorId);
-    if (!instructor) {
+    // Check if teacher exists and is a teacher
+    const teacher = await User.findById(teacherId);
+    if (!teacher) {
       return res.status(404).json({
         success: false,
-        error: 'Instructor not found'
+        error: 'Teacher not found'
       });
     }
     
-    if (instructor.role !== 'instructor') {
+    if (teacher.role !== 'teacher') {
       return res.status(400).json({
         success: false,
-        error: 'User is not an instructor'
+        error: 'User is not a teacher'
       });
     }
     
@@ -38,7 +38,7 @@ export const createClass = async (req: Request, res: Response) => {
       name,
       description,
       code,
-      instructor: instructorId,
+      teacher: teacherId,
       students: [],
       assignments: []
     });
@@ -46,8 +46,8 @@ export const createClass = async (req: Request, res: Response) => {
     // Save the class
     await newClass.save();
     
-    // Update instructor's teaching classes
-    await User.findByIdAndUpdate(instructorId, {
+    // Update teacher's teaching classes
+    await User.findByIdAndUpdate(teacherId, {
       $push: { teachingClasses: newClass._id }
     });
     
@@ -69,8 +69,8 @@ export const createClass = async (req: Request, res: Response) => {
 export const getClasses = async (req: Request, res: Response) => {
   try {
     const classes = await Class.find()
-      .populate('instructor', 'username email')
-      .select('name description code instructor students');
+      .populate('teacher', 'username email')
+      .select('name description code teacher students');
     
     return res.status(200).json({
       success: true,
@@ -90,7 +90,7 @@ export const getClasses = async (req: Request, res: Response) => {
 export const getClassById = async (req: Request, res: Response) => {
   try {
     const classItem = await Class.findById(req.params.id)
-      .populate('instructor', 'username email')
+      .populate('teacher', 'username email')
       .populate('students', 'username email')
       .populate({
         path: 'assignments',
@@ -266,9 +266,9 @@ export const deleteClass = async (req: Request, res: Response) => {
       });
     }
     
-    // Remove class from instructor's teaching classes
+    // Remove class from teacher's teaching classes
     await User.findByIdAndUpdate(
-      classToDelete.instructor,
+      classToDelete.teacher,
       { $pull: { teachingClasses: classId } }
     );
     

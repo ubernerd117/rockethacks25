@@ -4,7 +4,7 @@ import mongoose, { Document, Schema } from 'mongoose';
 export interface IUser extends Document {
   username: string;
   email: string;
-  role: 'student' | 'instructor';
+  role: 'student' | 'teacher';
   enrolledClasses?: mongoose.Types.ObjectId[];
   teachingClasses?: mongoose.Types.ObjectId[];
   createdAt: Date;
@@ -29,7 +29,7 @@ const UserSchema: Schema = new Schema({
   },
   role: {
     type: String,
-    enum: ['student', 'instructor'],
+    enum: ['student', 'teacher'],
     default: 'student'
   },
   enrolledClasses: [{

@@ -44,7 +44,7 @@ router.put('/:id', upload.single('file'), (req: Request, res: Response, next: Ne
   updateSubmission(req, res).catch(next);
 });
 
-// Manual grade a submission (by instructor)
+// Manual grade a submission (by teacher)
 router.put('/:id/grade', (req: Request, res: Response, next: NextFunction) => {
   gradeSubmission(req, res).catch(next);
 });
