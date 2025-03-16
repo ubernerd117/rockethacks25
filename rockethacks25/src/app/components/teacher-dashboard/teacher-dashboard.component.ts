@@ -14,11 +14,21 @@ import { ClassManagementComponent } from '../class-management/class-management.c
 })
 export class TeacherDashboardComponent {
   teacherClasses: any[] = [1, 2, 3]; // Add this line - Initialize teacherClasses
+  teacherAssignments: any[] = ['assignment1', 'assignment2']; // Add this line - Initialize teacherAssignments
+
   constructor(private authService: AuthService, private router: Router) {}
 
   viewClasses() {
     this.router.navigate(['/classes']);
   }
+
+  viewAssignments() {
+    this.router.navigate(['/assignments']);
+  }
+
+  viewStatistics() {
+    this.router.navigate(['/statistics']);
+  } 
 
   logout() {
     this.authService.logout();
