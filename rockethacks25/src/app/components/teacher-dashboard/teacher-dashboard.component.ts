@@ -12,14 +12,7 @@ import { TeacherStudentListComponent } from '../teacher-student-list/teacher-stu
   templateUrl: './teacher-dashboard.component.html',
   styleUrls: ['./teacher-dashboard.component.css'],
   standalone: true,
-  imports: [FileViewerComponent, CommonModule, ClassManagementComponent, RouterLink, ChatbotComponent, ChatbotComponent], // Add RouterLink
-  imports: [
-    FileViewerComponent,
-    CommonModule,
-    ClassManagementComponent,
-    RouterLink,
-    TeacherStudentListComponent,
-  ], // Add RouterLink
+  imports: [FileViewerComponent, CommonModule, ClassManagementComponent, RouterLink, ChatbotComponent, TeacherStudentListComponent,], // Add RouterLink
 })
 export class TeacherDashboardComponent {
   teacherClasses: any[] = [1, 2, 3]; // Add this line - Initialize teacherClasses
