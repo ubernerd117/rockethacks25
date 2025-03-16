@@ -4,7 +4,7 @@ import {
   getUsers,
   getUser,
   updateUser,
-  deleteUser
+  deleteUser,
 } from '../controllers/userController';
 
 const router = express.Router();
@@ -18,6 +18,17 @@ router.post('/', (req: Request, res: Response, next: NextFunction) => {
 router.get('/', (req: Request, res: Response, next: NextFunction) => {
   getUsers(req, res).catch(next);
 });
+
+router.get('/students', (req: Request, res: Response, next: NextFunction) => {
+  getUsers(req, res, 'student').catch(next);
+});
+
+router.get(
+  '/instructors',
+  (req: Request, res: Response, next: NextFunction) => {
+    getUsers(req, res, 'instructor').catch(next);
+  }
+);
 
 // Get a single user
 router.get('/:id', (req: Request, res: Response, next: NextFunction) => {
@@ -34,4 +45,4 @@ router.delete('/:id', (req: Request, res: Response, next: NextFunction) => {
   deleteUser(req, res).catch(next);
 });
 
-export default router; 
+export default router;
