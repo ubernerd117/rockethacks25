@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ClassService, Class } from '../../services/class.service';
 import { UserService, User } from '../../services/user.service';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-class-management',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './class-management.component.html',
   styleUrl: './class-management.component.css',
 })
@@ -28,10 +29,12 @@ export class ClassManagementComponent implements OnInit {
   };
   selectedClassId: string = '';
   selectedStudentUsername: string = '';
+  selectedClass: Class | null = null; // Add this line to store the selected class
 
   constructor(
     private classService: ClassService,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -79,5 +82,19 @@ export class ClassManagementComponent implements OnInit {
         this.selectedStudentUsername = '';
       }
     }
+  }
+
+  onClassSelect(event: Event): void { // Add this method
+    const selectElement = event.target as HTMLSelectElement;
+    const classId = selectElement.value;
+
+    this.selectedClass = this.classes.find(c => c.classId === classId) || null;
+  }
+  viewStatistics() {
+    this.router.navigate(['/statistics']);
+  }
+  getStudentName(username: string): string { // Add this method
+    const student = this.userService.getUserByUsername(username);
+    return student ? student.username : 'Unknown Student';
   }
 }

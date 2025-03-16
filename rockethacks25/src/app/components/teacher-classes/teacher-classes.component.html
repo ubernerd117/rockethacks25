@@ -3,47 +3,23 @@
 </div>
 <div class="overflow-x-auto">
     <table class="table table-zebra w-full">
-      <thead>
-        <tr>
-          <th>Class Name</th>
-          <th>Description</th>
-          <th>Students</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Introduction to Physics</td>
-          <td>Fundamentals of mechanics, thermodynamics, and electromagnetism.</td>
-          <td>30</td>
-          <td>
-            <button class="btn btn-sm btn-primary">View Details</button>
-          </td>
-        </tr>
-        <tr>
-          <td>Advanced Calculus</td>
-          <td>Multivariable calculus, vector analysis, and differential equations.</td>
-          <td>25</td>
-          <td>
-            <button class="btn btn-sm btn-primary">View Details</button>
-          </td>
-        </tr>
-        <tr>
-          <td>Computer Science 101</td>
-          <td>Introduction to programming, algorithms, and data structures.</td>
-          <td>40</td>
-          <td>
-            <button class="btn btn-sm btn-primary">View Details</button>
-          </td>
-        </tr>
-        <tr>
-          <td>Literature and Composition</td>
-          <td>Analysis of literary works and development of writing skills.</td>
-          <td>35</td>
-          <td>
-            <button class="btn btn-sm btn-primary">View Details</button>
-          </td>
-        </tr>
-      </tbody>
+        <thead>
+            <tr>
+                <th>Class Name</th>
+                <th>Description</th>
+                <th>Students</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let classObject of classes">
+                <td>{{ classObject.className }}</td>
+                <td>{{ classObject.classId }}</td>
+                <td>{{ getStudentCount(classObject) }}</td>
+                <td>
+                    <button class="btn btn-sm btn-primary" (click)="viewClassDetails(classObject.classId)">View Details</button>
+                </td>
+            </tr>
+        </tbody>
     </table>
-  </div>
+</div>
