@@ -284,8 +284,17 @@ export class SubmissionManagementComponent implements OnInit {
         }
       });
     } else {
-      // Load all submissions
-      this.loading = false;
+      // Load all submissions when no class or assignment is selected
+      this.submissionService.getAllSubmissions().subscribe({
+        next: (response: ApiResponse<Submission[]>) => {
+          this.submissions = response.data;
+          this.loading = false;
+        },
+        error: (error: any) => {
+          console.error('Error loading all submissions:', error);
+          this.loading = false;
+        }
+      });
     }
   }
 

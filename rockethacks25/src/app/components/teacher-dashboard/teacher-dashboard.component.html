@@ -9,6 +9,11 @@
       <li><a (click)="toggleSubmissions()">Submissions</a></li>
       <li><a>Grades</a></li>
     </ul>
+    
+    <!-- Logout button at bottom of sidebar -->
+    <div class="mt-auto pt-4">
+      <button (click)="logout()" class="btn btn-error btn-sm w-full">Logout</button>
+    </div>
   </div>
 
   <!-- Main Content -->
@@ -72,8 +77,6 @@
     <div *ngIf="!showSubmissions" class="mt-6">
       <app-class-management></app-class-management>
     </div>
-    
-    <button (click)="logout()" class="btn btn-error mt-6">logout</button>
     
     <!-- Chatbot Section (integrated into page) -->
     <div class="mt-6 bg-white p-6 rounded-lg shadow-md">

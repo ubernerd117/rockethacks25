@@ -11,6 +11,11 @@ export class SubmissionService {
 
   constructor(private http: HttpClient) { }
 
+  // Get all submissions
+  getAllSubmissions(): Observable<any> {
+    return this.http.get(this.apiUrl);
+  }
+
   // Create a new submission
   createSubmission(formData: FormData): Observable<any> {
     return this.http.post(this.apiUrl, formData);

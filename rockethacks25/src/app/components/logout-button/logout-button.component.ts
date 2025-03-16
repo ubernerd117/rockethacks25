@@ -3,7 +3,7 @@ import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-logout-button',
-  template: ` <button (click)="logout()">Log Out</button> `,
+  template: `<button (click)="logout()" class="btn btn-error">Log Out</button>`,
   standalone: true,
 })
 export class LogoutButtonComponent {
