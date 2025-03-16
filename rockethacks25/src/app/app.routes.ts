@@ -9,7 +9,6 @@ import { TeacherStatisticsComponent } from './components/teacher-statistics/teac
 import { AuthGuard } from './components/auth-guard/auth-guard.component';
 import { AuthGuard0 } from './components/auth-guard0.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
-import { TeacherClassDetailsComponent } from './components/teacher-class-details/teacher-class-details.component';
 import { CallbackComponent } from './components/callback/callback.component';
 import { ProfileComponent } from './components/profile/profile.component';
 
@@ -34,7 +33,6 @@ export const routes: Routes = [
       { path: 'classes', component: TeacherClassesComponent },
       { path: 'assignments', component: TeacherAssignmentsComponent },
       { path: 'statistics', component: TeacherStatisticsComponent },
-      { path: 'classDetails', component: TeacherClassDetailsComponent },
     ],
   },
   //auth0 paths
@@ -55,13 +53,11 @@ export const routes: Routes = [
       { path: 'classes', component: TeacherClassesComponent },
       { path: 'assignments', component: TeacherAssignmentsComponent },
       { path: 'statistics', component: TeacherStatisticsComponent },
-      { path: 'classDetails', component: TeacherClassDetailsComponent },
     ],
   },
   { path: 'classes', component: TeacherClassesComponent },
   { path: 'assignments', component: TeacherAssignmentsComponent },
   { path: 'statistics', component: TeacherStatisticsComponent },
-  { path: 'classDetails', component: TeacherClassDetailsComponent },
 ];
 
 @NgModule({
