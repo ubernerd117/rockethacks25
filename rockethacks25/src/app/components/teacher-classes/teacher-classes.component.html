@@ -6,18 +6,18 @@
         <thead>
             <tr>
                 <th>Class Name</th>
-                <th>Description</th>
+                <th>Code</th>
                 <th>Students</th>
                 <th>Actions</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let classObject of classes">
-                <td>{{ classObject.className }}</td>
-                <td>{{ classObject.classId }}</td>
+                <td>{{ classObject.name }}</td>
+                <td>{{ classObject.code }}</td>
                 <td>{{ getStudentCount(classObject) }}</td>
                 <td>
-                    <button class="btn btn-sm btn-primary" (click)="viewClassDetails(classObject.classId)">View Details</button>
+                    <button class="btn btn-sm btn-primary" (click)="viewClassDetails(classObject._id)">View Details</button>
                 </td>
             </tr>
         </tbody>

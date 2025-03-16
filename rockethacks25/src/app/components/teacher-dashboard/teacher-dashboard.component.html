@@ -6,6 +6,7 @@
       <li><a class="active">Home</a></li>
       <li><a routerLink="/classes">Classes</a></li>
       <li><a routerLink="/assignments">Assignments</a></li>
+      <li><a (click)="toggleSubmissions()">Submissions</a></li>
       <li><a>Grades</a></li>
     </ul>
   </div>
@@ -48,28 +49,37 @@
         </div>
       </div>
 
-      <!-- Statistics Card -->
+      <!-- Auto-Grading Card -->
       <div class="card w-full bg-secondary text-secondary-content shadow-xl">
         <div class="card-body">
-          <h2 class="card-title">Class Overview</h2>
-          <p>Track student progress, attendance, and performance.</p>
+          <h2 class="card-title">AI Auto-Grading</h2>
+          <p>Let AI help you grade student submissions quickly and efficiently.</p>
           <div class="card-actions justify-end">
-            <button class="btn" (click)="viewStatistics()">
-              View Statistics
+            <button class="btn" (click)="toggleSubmissions()">
+              Manage Submissions
             </button>
           </div>
         </div>
       </div>
     </div>
 
-    
+    <!-- Submission Management Section (conditionally shown) -->
+    <div *ngIf="showSubmissions" class="mt-6">
+      <app-submission-management></app-submission-management>
+    </div>
 
     <!-- Class Management Section -->
-    <div class="mt-6">
+    <div *ngIf="!showSubmissions" class="mt-6">
       <app-class-management></app-class-management>
     </div>
+    
     <button (click)="logout()" class="btn btn-error mt-6">logout</button>
+    
+    <!-- Chatbot Section (integrated into page) -->
+    <div class="mt-6 bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-xl font-semibold mb-4">Educational Assistant</h2>
       <app-chatbot></app-chatbot>
+    </div>
   </div>
 </div>
 

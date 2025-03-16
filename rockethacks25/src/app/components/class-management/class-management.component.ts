@@ -16,10 +16,12 @@ export class ClassManagementComponent implements OnInit {
   classes: Class[] = [];
   users: User[] = [];
   newClass: Class = {
-    classId: '',
-    className: '',
-    teacherUsername: '',
-    studentUsernames: [],
+    _id: '',
+    name: '',
+    code: '',
+    teacher: '',
+    students: [],
+    assignments: []
   };
   newUser: User = {
     username: '',
@@ -29,7 +31,7 @@ export class ClassManagementComponent implements OnInit {
   };
   selectedClassId: string = '';
   selectedStudentUsername: string = '';
-  selectedClass: Class | null = null; // Add this line to store the selected class
+  selectedClass: Class | null = null;
 
   constructor(
     private classService: ClassService,
@@ -38,19 +40,28 @@ export class ClassManagementComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.classes = this.classService.getClasses();
+    this.loadClasses();
     this.users = this.userService.getUsers();
   }
 
+  loadClasses(): void {
+    this.classService.getClasses().subscribe(response => {
+      this.classes = response.data;
+    });
+  }
+
   addClass(): void {
-    this.classService.addClass(this.newClass);
-    this.newClass = {
-      classId: '',
-      className: '',
-      teacherUsername: '',
-      studentUsernames: [],
-    };
-    this.classes = this.classService.getClasses();
+    this.classService.createClass(this.newClass).subscribe(response => {
+      this.newClass = {
+        _id: '',
+        name: '',
+        code: '',
+        teacher: '',
+        students: [],
+        assignments: []
+      };
+      this.loadClasses();
+    });
   }
 
   addUser(): void {
@@ -66,34 +77,37 @@ export class ClassManagementComponent implements OnInit {
 
   addStudentToClass(): void {
     const selectedClass = this.classes.find(
-      (c) => c.classId === this.selectedClassId
+      (c) => c._id === this.selectedClassId
     );
     const selectedStudent = this.users.find(
       (u) => u.username === this.selectedStudentUsername
     );
 
     if (selectedClass && selectedStudent) {
-      if (!selectedClass.studentUsernames.includes(selectedStudent.username)) {
-        selectedClass.studentUsernames.push(selectedStudent.username);
-        this.classService.updateClass(selectedClass);
-        selectedStudent.classId = selectedClass.classId;
-        this.userService.updateUser(selectedStudent);
-        this.selectedClassId = '';
-        this.selectedStudentUsername = '';
+      if (!selectedClass.students.includes(selectedStudent.username)) {
+        this.classService.addStudentToClass(selectedClass._id, selectedStudent.username).subscribe(response => {
+          this.loadClasses();
+          selectedStudent.classId = selectedClass._id;
+          this.userService.updateUser(selectedStudent);
+          this.selectedClassId = '';
+          this.selectedStudentUsername = '';
+        });
       }
     }
   }
 
-  onClassSelect(event: Event): void { // Add this method
+  onClassSelect(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     const classId = selectElement.value;
 
-    this.selectedClass = this.classes.find(c => c.classId === classId) || null;
+    this.selectedClass = this.classes.find(c => c._id === classId) || null;
   }
+  
   viewStatistics() {
     this.router.navigate(['/statistics']);
   }
-  getStudentName(username: string): string { // Add this method
+  
+  getStudentName(username: string): string {
     const student = this.userService.getUserByUsername(username);
     return student ? student.username : 'Unknown Student';
   }

@@ -1,8 +1,14 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../environments/environment';
 
 export interface Assignment {
-  filename: string;
-  studentUsername: string;
+  _id: string;
+  name: string;
+  description?: string;
+  dueDate: Date;
+  totalPoints: number;
   classId: string;
 }
 
@@ -10,23 +16,37 @@ export interface Assignment {
   providedIn: 'root',
 })
 export class AssignmentService {
-  private assignments: Assignment[] = [];
+  private apiUrl = environment.apiBaseUrl + '/api/assignments';
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
-  addAssignment(
-    filename: string,
-    studentUsername: string,
-    classId: string
-  ): void {
-    this.assignments.push({ filename, studentUsername, classId });
+  // Get all assignments
+  getAssignments(): Observable<any> {
+    return this.http.get(this.apiUrl);
   }
 
-  getAssignmentsForClass(classId: string): Assignment[] {
-    return this.assignments.filter((a) => a.classId === classId);
+  // Get assignments for a specific class
+  getAssignmentsByClass(classId: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}?classId=${classId}`);
   }
 
-  getAssignmentsForTeacher(classIds: string[]): Assignment[] {
-    return this.assignments.filter((a) => classIds.includes(a.classId));
+  // Get a single assignment
+  getAssignment(id: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/${id}`);
+  }
+
+  // Create a new assignment
+  createAssignment(assignmentData: any): Observable<any> {
+    return this.http.post(this.apiUrl, assignmentData);
+  }
+
+  // Update an assignment
+  updateAssignment(id: string, assignmentData: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}`, assignmentData);
+  }
+
+  // Delete an assignment
+  deleteAssignment(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
   }
 }

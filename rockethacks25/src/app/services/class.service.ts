@@ -1,56 +1,63 @@
 import { Injectable } from '@angular/core';
-import { User } from './user.service';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../environments/environment';
 
 export interface Class {
-  classId: string;
-  className: string;
-  teacherUsername: string;
-  studentUsernames: string[];
+  _id: string;
+  name: string;
+  description?: string;
+  code: string;
+  teacher: string;
+  students: string[];
+  assignments: string[];
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class ClassService {
-  private classes: Class[] = [
-    {
-      classId: 'math101',
-      className: 'Math 101',
-      teacherUsername: 'teacher1',
-      studentUsernames: ['student1'],
-    },
-    {
-      classId: 'science101',
-      className: 'Science 101',
-      teacherUsername: 'teacher2',
-      studentUsernames: ['student2'],
-    },
-  ];
+  private apiUrl = environment.apiBaseUrl + '/api/classes';
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
-  getClasses(): Class[] {
-    return this.classes;
+  // Get all classes
+  getClasses(): Observable<any> {
+    return this.http.get(this.apiUrl);
   }
 
-  getClassById(classId: string): Class | undefined {
-    return this.classes.find((c) => c.classId === classId);
+  // Get a single class
+  getClass(id: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/${id}`);
   }
 
-  getClassesForTeacher(teacherUsername: string): Class[] {
-    return this.classes.filter((c) => c.teacherUsername === teacherUsername);
+  // Get classes for a teacher
+  getClassesForTeacher(teacherId: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}?teacher=${teacherId}`);
   }
 
-  addClass(newClass: Class): void {
-    this.classes.push(newClass);
+  // Create a new class
+  createClass(classData: any): Observable<any> {
+    return this.http.post(this.apiUrl, classData);
   }
 
-  updateClass(updatedClass: Class): void {
-    const index = this.classes.findIndex(
-      (c) => c.classId === updatedClass.classId
-    );
-    if (index !== -1) {
-      this.classes[index] = updatedClass;
-    }
+  // Update a class
+  updateClass(id: string, classData: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}`, classData);
+  }
+
+  // Delete a class
+  deleteClass(id: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
+
+  // Add student to class
+  addStudentToClass(classId: string, studentId: string): Observable<any> {
+    return this.http.post(`${this.apiUrl}/${classId}/students`, { studentId });
+  }
+
+  // Remove student from class
+  removeStudentFromClass(classId: string, studentId: string): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${classId}/students/${studentId}`);
   }
 }

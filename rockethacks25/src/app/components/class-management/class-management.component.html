@@ -6,8 +6,8 @@
       <h3 class="text-lg font-semibold mb-2">Select a Course</h3>
       <select class="select select-bordered w-full max-w-md" (change)="onClassSelect($event)">
         <option disabled selected>Pick a Course</option>
-        <option *ngFor="let class of classes" [value]="class.classId">
-          {{ class.className }}
+        <option *ngFor="let class of classes" [value]="class._id">
+          {{ class.name }}
         </option>
       </select>
     </div>
@@ -16,7 +16,7 @@
     <div *ngIf="selectedClass">
       <div class="flex items-center justify-between mb-4">
         <h2 class="text-xl font-semibold">
-          Course: <span id="selectedCourseName">{{ selectedClass.className }}</span>
+          Course: <span id="selectedCourseName">{{ selectedClass.name }}</span>
         </h2>
         <label for="addAssignmentModal" class="btn btn-sm btn-primary">Add Assignment</label>
         <button class="btn btn-sm btn-primary" (click)="viewStatistics()">View Statistics</button>
@@ -30,7 +30,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let studentUsername of selectedClass.studentUsernames">
+          <tr *ngFor="let studentUsername of selectedClass.students">
             <td>{{ getStudentName(studentUsername) }}</td>
           </tr>
         </tbody>

@@ -21,13 +21,20 @@ export class TeacherClassesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.classes = this.classService.getClasses(); // Get classes from the service
+    this.loadClasses(); // Load classes from the service
+  }
+
+  loadClasses(): void {
+    this.classService.getClasses().subscribe(response => {
+      this.classes = response.data;
+    });
   }
 
   getStudentCount(classObject: Class): number {
-    return classObject.studentUsernames.length;
+    return classObject.students.length;
   }
+  
   viewClassDetails(classId: string){
-      this.router.navigate([`/classDetails/${classId}`])
+    this.router.navigate([`/classDetails/${classId}`]);
   }
 }

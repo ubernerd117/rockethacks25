@@ -117,27 +117,27 @@ export class FileUploadComponent implements OnDestroy {
         .getCurrentUser()
         .pipe(
           tap((currentUser) => {
-            if (currentUser && currentUser.classId) {
-              // Now call fileService.uploadFile()
-              this.fileService
-                .uploadFile(this.selectedFile!, 'submissions') // folder name is optional.
-                .subscribe({
-                  next: (event) => {
-                    console.log('File uploaded successfully', event);
-                    // Handle successful upload, e.g., show a success message
-                    alert('File Uploaded (Actually)');
-                    this.selectedFile = null;
-                  },
-                  error: (error) => {
-                    console.error('Error uploading file', error);
-                    // Handle upload error, e.g., show an error message
-                    alert('Error uploading the file');
-                  },
-                });
-              console.log('File Selected:', this.selectedFile);
-            } else {
-              alert('Error: Could not determine student or class.');
-            }
+            // if (currentUser && currentUser.classId) {
+            // Now call fileService.uploadFile()
+            this.fileService
+              .uploadFile(this.selectedFile!, 'submissions') // folder name is optional.
+              .subscribe({
+                next: (event) => {
+                  console.log('File uploaded successfully', event);
+                  // Handle successful upload, e.g., show a success message
+                  alert('File Uploaded (Actually)');
+                  this.selectedFile = null;
+                },
+                error: (error) => {
+                  console.error('Error uploading file', error);
+                  // Handle upload error, e.g., show an error message
+                  alert('Error uploading the file');
+                },
+              });
+            console.log('File Selected:', this.selectedFile);
+            // } else {
+            //   alert('Error: Could not determine student or class.');
+            // }
           })
         )
         .subscribe();
