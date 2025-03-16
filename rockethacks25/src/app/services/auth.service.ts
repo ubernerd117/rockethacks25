@@ -1,44 +1,100 @@
+// import { Injectable } from '@angular/core';
+// import { UserService, User } from './user.service';
+
+// @Injectable({
+//   providedIn: 'root',
+// })
+// export class AuthService {
+//   private currentUser: User | null = null;
+
+//   constructor(private userService: UserService) {}
+
+//   login(username: string, password?: string): boolean {
+//     const user = this.userService
+//       .getUsers()
+//       .find((u) => u.username === username && u.password === password);
+
+//     if (user) {
+//       this.currentUser = user;
+//       return true;
+//     } else {
+//       return false;
+//     }
+//   }
+
+//   logout(): void {
+//     this.currentUser = null;
+//   }
+
+//   getCurrentUser(): User | null {
+//     return this.currentUser;
+//   }
+
+//   isLoggedIn(): boolean {
+//     return !!this.currentUser;
+//   }
+
+//   isTeacher(): boolean {
+//     return this.currentUser?.role === 'teacher';
+//   }
+
+//   isStudent(): boolean {
+//     return this.currentUser?.role === 'student';
+//   }
+// }
+
 import { Injectable } from '@angular/core';
-import { UserService, User } from './user.service';
+import { AuthService as Auth0AngularAuthService } from '@auth0/auth0-angular';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private currentUser: User | null = null;
+  constructor(private auth0: Auth0AngularAuthService) {}
 
-  constructor(private userService: UserService) {}
-
-  login(username: string, password?: string): boolean {
-    const user = this.userService
-      .getUsers()
-      .find((u) => u.username === username && u.password === password);
-
-    if (user) {
-      this.currentUser = user;
-      return true;
-    } else {
-      return false;
-    }
+  loginWithRedirect(options?: any): void {
+    this.auth0.loginWithRedirect(options); // Pass options to Auth0
   }
 
-  logout(): void {
-    this.currentUser = null;
+  logout(options?: { logoutParams?: { returnTo?: string } }): void {
+    this.auth0.logout(options);
   }
 
-  getCurrentUser(): User | null {
-    return this.currentUser;
+  get isAuthenticated$(): Observable<boolean> {
+    return this.auth0.isAuthenticated$;
   }
 
-  isLoggedIn(): boolean {
-    return !!this.currentUser;
+  get user$(): Observable<any> {
+    return this.auth0.user$;
   }
 
-  isTeacher(): boolean {
-    return this.currentUser?.role === 'teacher';
+  getAccessTokenSilently(): Observable<string> {
+    return this.auth0.getAccessTokenSilently();
   }
 
-  isStudent(): boolean {
-    return this.currentUser?.role === 'student';
+  isTeacher(): Observable<boolean> {
+    return this.user$.pipe(
+      map((user) => {
+        if (!user) {
+          return false;
+        }
+        const roles = user['https://my-app.com/roles'] as string[];
+        return roles && roles.includes('teacher');
+      })
+    );
+  }
+
+  isStudent(): Observable<boolean> {
+    return this.user$.pipe(
+      map((user) => {
+        if (!user) {
+          return false;
+        }
+        const roles = user['https://my-app.com/roles'] as string[];
+        return roles && roles.includes('student');
+      })
+    );
   }
 }
