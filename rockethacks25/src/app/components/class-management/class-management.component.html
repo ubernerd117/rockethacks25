@@ -4,165 +4,63 @@
     <!-- Course Selection -->
     <div class="mb-6">
       <h3 class="text-lg font-semibold mb-2">Select a Course</h3>
-      <select class="select select-bordered w-full max-w-md">
+      <select class="select select-bordered w-full max-w-md" (change)="onClassSelect($event)">
         <option disabled selected>Pick a Course</option>
-        <option>Introduction to Physics</option>
-        <option>Advanced Calculus</option>
-        <option>Computer Science 101</option>
-        <option>Literature and Composition</option>
+        <option *ngFor="let class of classes" [value]="class.classId">
+          {{ class.className }}
+        </option>
       </select>
     </div>
   
-    <!-- Selected Course Details (Initially Hidden) -->
-    <div id="courseDetails" class="hidden">
+    <!-- Selected Course Details -->
+    <div *ngIf="selectedClass">
       <div class="flex items-center justify-between mb-4">
         <h2 class="text-xl font-semibold">
-          Course: <span id="selectedCourseName"></span>
+          Course: <span id="selectedCourseName">{{ selectedClass.className }}</span>
         </h2>
         <label for="addAssignmentModal" class="btn btn-sm btn-primary">Add Assignment</label>
+        <button class="btn btn-sm btn-primary" (click)="viewStatistics()">View Statistics</button>
+
       </div>
+       <div class="overflow-x-auto">
+      <table class="table table-zebra w-full">
+        <thead>
+          <tr>
+            <th>Student Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let studentUsername of selectedClass.studentUsernames">
+            <td>{{ getStudentName(studentUsername) }}</td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
   
-      <!-- Assignment List -->
-      <div class="overflow-x-auto">
-        <table class="table table-zebra w-full">
-          <thead>
-            <tr>
-              <th>Assignment Name</th>
-              <th>Due Date</th>
-              <th>Submissions</th>
-            </tr>
-          </thead>
-          <tbody id="assignmentList">
-            <!-- Assignment rows will be added dynamically here -->
-            <tr>
-              <td>Lab Report 1</td>
-              <td>2024-03-15</td>
-              <td>
-                <a href="#submissionsModal" class="btn btn-sm btn-primary modal-button">View Submissions</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Midterm Exam</td>
-              <td>2024-04-15</td>
-              <td>
-                <a href="#submissionsModal" class="btn btn-sm btn-primary modal-button">View Submissions</a>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-  
-      <!-- Submission Modal (Initially Hidden) -->
-      <div class="modal" id="submissionsModal">
-        <div class="modal-box w-11/12 max-w-5xl">
-          <h3 class="font-bold text-lg">Submissions for <span id="modalAssignmentName"></span></h3>
-          <div class="overflow-x-auto">
-            <table class="table table-zebra w-full">
-              <thead>
-                <tr>
-                  <th>Student Name</th>
-                  <th>Submission Time</th>
-                  <th>File</th>
-                </tr>
-              </thead>
-              <tbody id="submissionList">
-                <!-- Submission rows will be added dynamically here -->
-                <tr>
-                  <td>John Doe</td>
-                  <td>2024-03-14 10:30 AM</td>
-                  <td>
-                    <a href="#" class="link link-primary" download>lab_report_1_john_doe.pdf</a>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Jane Smith</td>
-                  <td>2024-03-14 09:45 AM</td>
-                  <td>
-                    <a href="#" class="link link-primary" download>lab_report_1_jane_smith.docx</a>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+    <!-- Add Assignment Modal (Hidden) -->
+    <input type="checkbox" id="addAssignmentModal" class="modal-toggle" />
+    <div class="modal">
+      <div class="modal-box">
+        <h3 class="font-bold text-lg">Add New Assignment</h3>
+        <form id="addAssignmentForm">
+          <div class="form-control mb-4">
+            <label class="label" for="assignmentName">
+              <span class="label-text">Assignment Name</span>
+            </label>
+            <input type="text" id="assignmentName" class="input input-bordered" required />
           </div>
-          <div class="modal-action">
-            <a href="#" class="btn">Close</a>
+          <div class="form-control mt-4">
+            <label class="label" for="dueDate">
+              <span class="label-text">Due Date</span>
+            </label>
+            <input type="date" id="dueDate" class="input input-bordered" required />
           </div>
-        </div>
+          <div class="modal-action mt-4">
+            <label for="addAssignmentModal" class="btn btn-error">Cancel</label>
+            <button type="submit" class="btn btn-primary">Add</button>
+          </div>
+        </form>
       </div>
-          <!-- Add Assignment Modal (Hidden) -->
-      <input type="checkbox" id="addAssignmentModal" class="modal-toggle" />
-      <div class="modal">
-        <div class="modal-box">
-          <h3 class="font-bold text-lg">Add New Assignment</h3>
-          <form id="addAssignmentForm">
-            <div class="form-control">
-              <label class="label" for="assignmentName">
-                <span class="label-text">Assignment Name</span>
-              </label>
-              <input type="text" id="assignmentName" class="input input-bordered" required />
-            </div>
-            <div class="form-control mt-4">
-              <label class="label" for="dueDate">
-                <span class="label-text">Due Date</span>
-              </label>
-              <input type="date" id="dueDate" class="input input-bordered" required />
-            </div>
-            <div class="modal-action mt-4">
-              <label for="addAssignmentModal" class="btn btn-error">Cancel</label>
-              <button type="submit" class="btn btn-primary">Add</button>
-            </div>
-          </form>
-        </div>
-      </div>
-      
-      <!-- Add more sections here, e.g., "Students," "Announcements," etc. -->
     </div>
   </div>
-  
-  <script>
-    // JavaScript to handle course selection and show/hide details
-    const courseSelect = document.querySelector('select');
-    const courseDetails = document.getElementById('courseDetails');
-    const selectedCourseName = document.getElementById('selectedCourseName');
-    const modalAssignmentName = document.getElementById('modalAssignmentName');
-    const assignmentList = document.getElementById('assignmentList');
-    const submissionList = document.getElementById('submissionList');
-    const modalButtons = document.querySelectorAll('.modal-button');
-    const addAssignmentForm = document.getElementById('addAssignmentForm')
-    const assignmentNameInput = document.getElementById('assignmentName')
-    const dueDateInput = document.getElementById('dueDate')
-  
-    courseSelect.addEventListener('change', function () {
-      const selectedCourse = this.value;
-  
-      if (selectedCourse !== "Pick a Course") {
-        courseDetails.classList.remove('hidden');
-        selectedCourseName.textContent = selectedCourse;
-      } else {
-        courseDetails.classList.add('hidden');
-      }
-    });
-  
-    modalButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const assignment = button.parentElement.parentElement.childNodes[1].textContent;
-        modalAssignmentName.textContent = assignment;
-      });
-    });
-  
-    addAssignmentForm.addEventListener('submit', (event) => {
-        event.preventDefault()
-        const newAssignmentName = assignmentNameInput.value;
-        const newDueDate = dueDateInput.value;
-        const newRow = document.createElement('tr');
-        newRow.innerHTML = `
-          <td>${newAssignmentName}</td>
-          <td>${newDueDate}</td>
-          <td>
-          <a href="#submissionsModal" class="btn btn-sm btn-primary modal-button">View Submissions</a>
-          </td>
-        `
-        assignmentList.appendChild(newRow);
-    })
-  </script>
-  
