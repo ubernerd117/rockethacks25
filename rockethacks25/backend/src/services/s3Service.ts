@@ -1,5 +1,6 @@
 import AWS from 'aws-sdk';
 import dotenv from 'dotenv';
+import * as fs from 'fs';
 
 dotenv.config();
 
@@ -18,11 +19,13 @@ export const uploadFileToS3 = async (
   file: Express.Multer.File,
   bucketName: string = process.env.AWS_BUCKET_NAME || '',
   folderName: string = '',
-  metadata?: any
+  metadata?: any,
+  customFileName?: string
 ): Promise<AWS.S3.ManagedUpload.SendData> => {
   // Generate unique file name - include submissionId if available
-  const submissionId = metadata?.submissionId ? `__${metadata.submissionId}` : '';
-  const fileName = `${folderName ? folderName + '/' : ''}${Date.now()}-${file.originalname.replace(/\s+/g, '-')}${submissionId}`;
+  const fileName = customFileName 
+    ? `${folderName ? folderName + '/' : ''}${customFileName}` 
+    : `${folderName ? folderName + '/' : ''}${Date.now()}-${file.originalname.replace(/\s+/g, '-')}`;
 
   // Set upload parameters
   const params: AWS.S3.PutObjectRequest = {
@@ -87,6 +90,25 @@ export const deleteFileFromS3 = async (
     return await s3.deleteObject(params).promise();
   } catch (error) {
     console.error('Error deleting file from S3:', error);
+    throw error;
+  }
+};
+
+export const downloadFileFromS3 = async (
+  key: string,
+  localFilePath: string,
+  bucketName: string = process.env.AWS_BUCKET_NAME || ''
+): Promise<void> => {
+  const params = {
+    Bucket: bucketName,
+    Key: key
+  };
+
+  try {
+    const { Body } = await s3.getObject(params).promise();
+    fs.writeFileSync(localFilePath, Body as Buffer);
+  } catch (error) {
+    console.error('Error downloading file from S3:', error);
     throw error;
   }
 }; 

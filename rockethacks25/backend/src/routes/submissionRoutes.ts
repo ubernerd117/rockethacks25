@@ -3,11 +3,14 @@ import {
   createSubmission,
   getSubmissionsByAssignment,
   getSubmissionsByStudent,
+  getSubmissionsByClass,
   getSubmission,
   updateSubmission,
   gradeSubmission,
   deleteSubmission,
   updateSubmissionGrade,
+  autoGradeSubmission
+
 } from '../controllers/submissionController';
 import upload from '../middleware/upload';
 
@@ -21,6 +24,11 @@ router.post(
     createSubmission(req, res).catch(next);
   }
 );
+
+// Get all submissions for a class
+router.get('/class/:classId', (req: Request, res: Response, next: NextFunction) => {
+  getSubmissionsByClass(req, res).catch(next);
+});
 
 // Get all submissions for an assignment
 router.get(
@@ -64,6 +72,11 @@ router.put(
     updateSubmissionGrade(req, res).catch(next);
   }
 );
+
+// Auto grade a submission (with AI)
+router.post('/:id/auto-grade', (req: Request, res: Response, next: NextFunction) => {
+  autoGradeSubmission(req, res).catch(next);
+});
 
 // Delete a submission
 router.delete('/:id', (req: Request, res: Response, next: NextFunction) => {

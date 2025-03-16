@@ -8,19 +8,20 @@ export const createClass = async (req: Request, res: Response) => {
   try {
     const { name, description, code, teacherId } = req.body;
 
-    // Check if teacher exists and is an teacher
     const teacher = await User.findById(teacherId);
     if (!teacher) {
       return res.status(404).json({
         success: false,
-        error: 'Teacher not found',
+
+        error: 'Teacher not found'
       });
     }
-
+    
     if (teacher.role !== 'teacher') {
       return res.status(400).json({
         success: false,
-        error: 'User is not an teacher',
+        error: 'User is not a teacher'
+
       });
     }
 
@@ -46,9 +47,11 @@ export const createClass = async (req: Request, res: Response) => {
     // Save the class
     await newClass.save();
 
+    
     // Update teacher's teaching classes
     await User.findByIdAndUpdate(teacherId, {
-      $push: { teachingClasses: newClass._id },
+      $push: { teachingClasses: newClass._id }
+
     });
 
     return res.status(201).json({
@@ -267,10 +270,12 @@ export const deleteClass = async (req: Request, res: Response) => {
       });
     }
 
+    
     // Remove class from teacher's teaching classes
-    await User.findByIdAndUpdate(classToDelete.teacher, {
-      $pull: { teachingClasses: classId },
-    });
+    await User.findByIdAndUpdate(
+      classToDelete.teacher,
+      { $pull: { teachingClasses: classId } }
+    );
 
     // Remove class from all enrolled students
     await User.updateMany(
